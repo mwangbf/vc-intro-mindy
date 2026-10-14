@@ -1,0 +1,1253 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>产品人的投资思考</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap">
+<style>
+/* Layout: sticky tab bar over a single reading column (~720px) that widens to 1080px for figures; mono labels carry the "data" voice */
+:root{
+  --bg:#F2F5F6; --surface:#FFFFFF; --ink:#0E1820; --muted:#55626D; --line:#D8DEE2;
+  --accent:#0A7470; --accent-soft:#DCEEED; --signal:#B4600A; --signal-soft:#F7EADB;
+  --grid:rgba(14,24,32,.055);
+  --f-display:"Noto Serif SC","Songti SC","STSong",serif;
+  --f-body:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --wide:1080px; --read:720px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0A1014; --surface:#111A20; --ink:#E3E9EC; --muted:#93A1AB; --line:#223039;
+  --accent:#3EC6BB; --accent-soft:#0F2B2A; --signal:#F0A54E; --signal-soft:#2D2114;
+  --grid:rgba(227,233,236,.045); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0A1014; --surface:#111A20; --ink:#E3E9EC; --muted:#93A1AB; --line:#223039;
+  --accent:#3EC6BB; --accent-soft:#0F2B2A; --signal:#F0A54E; --signal-soft:#2D2114;
+  --grid:rgba(227,233,236,.045); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+.wrap{max-width:var(--wide);margin:0 auto;padding-inline:20px}
+.read{max-width:var(--read)}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;line-height:1.3;margin:0}
+p{margin:0}
+.mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tnum{font-variant-numeric:tabular-nums}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+/* hero */
+.hero{position:relative;padding-block:72px 48px;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:32px 32px;mask-image:linear-gradient(180deg,#000 30%,transparent);-webkit-mask-image:linear-gradient(180deg,#000 30%,transparent);pointer-events:none}
+.hero .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:48px;align-items:end}
+.hero h1{font-size:clamp(30px,4.6vw,52px);font-weight:900;letter-spacing:-.01em;margin-top:16px}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero .lede{margin-top:20px;color:var(--muted);font-size:17px;max-width:34em}
+.roles{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.chip{font-family:var(--f-mono);font-size:12px;padding:4px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted);background:var(--surface)}
+.ticker{border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:6px 20px}
+.tk{display:grid;grid-template-columns:92px minmax(0,1fr);gap:14px;align-items:baseline;padding-block:14px;border-bottom:1px dashed var(--line)}
+.tk:last-child{border-bottom:0}
+.tk b{font-family:var(--f-mono);font-size:22px;font-weight:500;color:var(--accent);font-variant-numeric:tabular-nums;white-space:nowrap;line-height:1.2}
+.tk p{display:grid;gap:2px}
+.tk strong{font-size:15px;line-height:1.5}
+.tk span{font-size:12.5px;color:var(--muted);line-height:1.55}
+.era-label{display:flex;align-items:center;gap:12px;margin-top:8px}
+.era-label::after{content:"";flex:1;height:1px;background:var(--line)}
+.mini{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.mini .card{padding:16px;gap:6px}
+.mini .yr2{font-family:var(--f-mono);font-size:13px;color:var(--accent)}
+.open{display:flex;flex-wrap:wrap;gap:8px}
+.open span{font-size:14px;padding:6px 12px;border-radius:999px;border:1px dashed var(--accent);color:var(--ink);background:var(--surface)}
+.open span.q{border-style:solid;background:var(--accent);color:var(--bg)}
+@media (max-width:860px){.mini{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* tabs */
+.tabbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tabbar .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.tab{appearance:none;border:0;background:none;color:var(--muted);font:500 15px/1.4 var(--f-body);padding:16px 14px 14px;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;display:flex;gap:8px;align-items:baseline}
+.tab small{font-family:var(--f-mono);font-size:11px;opacity:.7}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+
+/* panels */
+.panel{padding-block:56px 96px}
+.panel-head{display:grid;gap:14px;margin-bottom:48px}
+.panel-head h2{font-size:clamp(28px,3.6vw,40px);font-weight:900}
+.panel-head p{color:var(--muted);font-size:17px}
+section.block{display:grid;gap:22px;padding-block:44px;border-top:1px solid var(--line)}
+section.block:first-of-type{border-top:0;padding-top:0}
+.block h3{font-size:26px;font-weight:700}
+.block h4{font-size:19px;font-weight:700}
+.kicker{display:flex;align-items:center;gap:10px}
+.kicker::before{content:"";width:18px;height:1px;background:var(--accent)}
+.body-text{display:grid;gap:14px}
+.body-text p{max-width:var(--read)}
+strong{font-weight:700}
+mark{background:var(--signal-soft);color:inherit;padding:0 3px;border-radius:3px}
+
+.subnav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.subnav button{appearance:none;font:500 14px var(--f-body);padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.subnav button:hover{border-color:var(--accent);color:var(--accent)}
+[id]{scroll-margin-top:72px}
+
+/* generic grids */
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;display:grid;gap:10px;align-content:start;min-width:0}
+.card h4{font-size:17px}
+.card p,.card li{font-size:14.5px;color:var(--muted);line-height:1.75}
+.card ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.card .tag{justify-self:start}
+.tag{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;padding:3px 8px;border-radius:6px;background:var(--accent-soft);color:var(--accent)}
+.tag.warm{background:var(--signal-soft);color:var(--signal)}
+
+.figure{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;display:grid;gap:14px;min-width:0}
+.figure figcaption{font-size:13px;color:var(--muted)}
+.figure svg{width:100%;height:auto;display:block}
+.scroll-x{overflow-x:auto}
+
+.quote{font-family:var(--f-display);font-size:clamp(20px,2.4vw,26px);font-weight:700;line-height:1.55;padding-left:20px;border-left:3px solid var(--accent);max-width:var(--read)}
+.callout{background:var(--accent-soft);border-radius:12px;padding:18px 20px;max-width:var(--read);font-size:15px}
+.callout .mono{color:var(--accent);display:block;margin-bottom:6px}
+
+table{border-collapse:collapse;width:100%;min-width:600px;font-size:14px}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-weight:500;font-size:11.5px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+td:first-child{font-weight:700;white-space:nowrap}
+
+/* fund flow */
+.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;align-items:stretch}
+.flow .node{border:1px solid var(--line);border-radius:10px;padding:14px;display:grid;gap:4px;background:var(--bg);align-content:start}
+.flow .node b{font-size:15px}
+.flow .node span{font-size:12.5px;color:var(--muted);line-height:1.6}
+.flow .node.hl{border-color:var(--accent);background:var(--accent-soft)}
+.waterfall{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.waterfall div{padding:12px 14px;border-radius:10px;background:var(--bg);border:1px dashed var(--line);font-size:13.5px;color:var(--muted)}
+.waterfall b{display:block;color:var(--ink);font-size:14px}
+
+/* cases */
+.case{display:grid;grid-template-columns:150px minmax(0,1fr);gap:24px;padding-block:22px;border-top:1px solid var(--line)}
+.case:first-child{border-top:0}
+.case .yr{font-family:var(--f-mono);font-size:28px;color:var(--accent);line-height:1.1}
+.case .yr small{display:block;font-size:12px;color:var(--muted);margin-top:6px;letter-spacing:.04em}
+.case h4{font-size:20px;margin-bottom:6px}
+.case p{color:var(--muted);font-size:15px}
+.case .lesson{margin-top:10px;font-size:14.5px;color:var(--ink)}
+.case .lesson::before{content:"启示 · ";font-family:var(--f-mono);font-size:12px;color:var(--signal)}
+
+/* stack */
+.stack{display:grid;gap:8px}
+.layer{display:grid;grid-template-columns:120px minmax(0,1fr) 150px;gap:16px;align-items:center;padding:12px 16px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.layer b{font-size:15px}
+.layer p{font-size:13.5px;color:var(--muted);line-height:1.6}
+.meter{display:grid;gap:4px}
+.meter i{display:block;height:6px;border-radius:3px;background:var(--line);position:relative;overflow:hidden}
+.meter i::after{content:"";position:absolute;inset:0;width:var(--w);border-radius:3px;background:var(--c,var(--accent))}
+.meter small{font-family:var(--f-mono);font-size:10.5px;color:var(--muted)}
+
+/* cost revolution */
+.cost svg{height:64px}
+.cost .big{font-family:var(--f-display);font-size:20px;font-weight:700;color:var(--ink)}
+
+/* category blocks */
+.cat{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:28px;padding:28px;background:var(--surface);border:1px solid var(--line);border-radius:16px}
+.cat-head{display:grid;gap:12px;align-content:start}
+.cat-head .num{font-family:var(--f-mono);font-size:13px;color:var(--accent)}
+.cat-head h4{font-size:22px}
+.cat-head p{color:var(--muted);font-size:14.5px}
+.vs{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;font-size:13px;margin-top:6px}
+.vs span{padding:8px 10px;border-radius:8px;background:var(--bg);border:1px solid var(--line);text-align:center}
+.vs span:last-child{background:var(--accent-soft);border-color:transparent;color:var(--accent);font-weight:500}
+.vs em{font-style:normal;color:var(--muted);font-family:var(--f-mono)}
+.items{display:grid;gap:14px}
+.item{display:grid;gap:6px;padding-bottom:14px;border-bottom:1px dashed var(--line)}
+.item:last-child{border-bottom:0;padding-bottom:0}
+.item b{font-size:15.5px}
+.item p{font-size:14px;color:var(--muted);line-height:1.75}
+.item .eg{font-size:13.5px;color:var(--ink);background:var(--bg);border-radius:8px;padding:8px 12px;line-height:1.7}
+.item .eg::before{content:"落地 ";font-family:var(--f-mono);font-size:11px;color:var(--signal);margin-right:4px}
+
+/* eras */
+.eras{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.era{border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:10px;align-content:start;background:var(--surface)}
+.era.now{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.era h4{font-size:17px}
+.era ol{margin:0;padding:0;list-style:none;display:grid;gap:6px;counter-reset:s}
+.era li{font-size:13.5px;color:var(--muted);padding:8px 10px;background:var(--bg);border-radius:8px;position:relative}
+.era li+li::before{content:"↓";position:absolute;top:-15px;left:50%;font-size:11px;color:var(--muted)}
+
+.test{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.test .card{gap:8px}
+.test .yes{border-color:var(--accent)}
+
+/* me */
+.traits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.trait{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;display:grid;gap:14px;align-content:start}
+.trait h4{font-size:21px}
+.trait .claim{font-size:14.5px;color:var(--muted)}
+.trait ul{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.trait li{font-size:14px;line-height:1.65;padding-left:14px;position:relative}
+.trait li::before{content:"";position:absolute;left:0;top:.7em;width:6px;height:1px;background:var(--accent)}
+.trait .vc{font-size:13.5px;padding-top:12px;border-top:1px dashed var(--line);color:var(--ink)}
+.trait .vc::before{content:"在 VC 里 → ";font-family:var(--f-mono);font-size:11px;color:var(--accent)}
+.kpi{font-family:var(--f-mono);color:var(--accent);font-weight:500}
+
+.timeline{display:grid;gap:0;position:relative}
+.tl{display:grid;grid-template-columns:150px 18px minmax(0,1fr);gap:16px;padding-bottom:22px}
+.tl .when{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);text-align:right;padding-top:2px}
+.tl .dot{position:relative}
+.tl .dot::before{content:"";position:absolute;left:4px;top:8px;width:10px;height:10px;border-radius:50%;background:var(--surface);border:2px solid var(--accent)}
+.tl .dot::after{content:"";position:absolute;left:8px;top:22px;bottom:-22px;width:2px;background:var(--line)}
+.tl:last-child .dot::after{display:none}
+.tl.edu .dot::before{border-color:var(--signal)}
+.tl b{font-size:15.5px}
+.tl p{font-size:14px;color:var(--muted)}
+
+.closing{margin-top:56px;padding:36px;border-radius:18px;background:var(--ink);color:var(--bg);display:grid;gap:14px}
+.closing h3{font-size:clamp(22px,3vw,30px);color:var(--bg)}
+.closing p{opacity:.8;max-width:40em}
+
+footer{border-top:1px solid var(--line);padding-block:28px;color:var(--muted);font-size:13px}
+
+@media (max-width:860px){
+  .hero .wrap{grid-template-columns:1fr;gap:32px}
+  .g3,.g4,.traits,.eras{grid-template-columns:1fr}
+  .flow{grid-template-columns:1fr 1fr}
+  .cat{grid-template-columns:1fr;padding:20px}
+  .layer{grid-template-columns:1fr}
+  .waterfall{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .g2,.test,.flow{grid-template-columns:1fr}
+  .case{grid-template-columns:1fr;gap:8px}
+  .tl{grid-template-columns:18px minmax(0,1fr)}
+  .tl .when{grid-column:2;text-align:left;order:-1}
+  .tl .dot{grid-row:1 / span 2}
+  .closing{padding:24px}
+  .hero{padding-block:48px 36px}
+}
+/* translation component: 原文 → 译文 */
+.tr{display:grid;gap:10px}
+.tr-row{display:grid;grid-template-columns:minmax(0,1fr) 28px minmax(0,1.25fr);gap:8px;align-items:stretch}
+.tr-src,.tr-dst{padding:10px 14px;border-radius:10px;font-size:14px;line-height:1.65;display:grid;gap:2px;align-content:center}
+.tr-src{border:1px dashed var(--line);color:var(--muted);background:var(--bg)}
+.tr-dst{background:var(--accent-soft);color:var(--ink)}
+.tr-src::before,.tr-dst::before{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em}
+.tr-src::before{content:"原文 · 模糊";color:var(--muted)}
+.tr-dst::before{content:"译文 · 可执行";color:var(--accent)}
+.tr-arrow{display:grid;place-items:center;font-family:var(--f-mono);color:var(--accent)}
+.tr-row.inv .tr-dst{background:var(--signal-soft)}
+.tr-row.inv .tr-dst::before{content:"译文 · 投资判断";color:var(--signal)}
+/* shifts: 从 → 到 */
+.shifts{display:grid;gap:0}
+.shift{display:grid;grid-template-columns:minmax(0,1fr) 28px minmax(0,1fr) minmax(0,2fr);gap:12px;align-items:center;padding-block:14px;border-bottom:1px dashed var(--line)}
+.shift:last-child{border-bottom:0}
+.shift .from{font-size:14px;color:var(--muted)}
+.shift .to{font-weight:700;font-size:15px}
+.shift em{font-style:normal;font-family:var(--f-mono);color:var(--accent);text-align:center}
+.shift p{font-size:13.5px;color:var(--muted);line-height:1.7}
+.card .look{font-size:13.5px;color:var(--ink);padding-top:8px;border-top:1px dashed var(--line)}
+.card .look::before{content:"我会看 · ";font-family:var(--f-mono);font-size:11px;color:var(--signal)}
+.card .eg2{font-size:13px;color:var(--muted)}
+.card .eg2::before{content:"形态 ";font-family:var(--f-mono);font-size:11px;color:var(--accent)}
+.card .opp{font-size:13.5px;color:var(--ink)}
+.card .opp::before{content:"机会 · ";font-family:var(--f-mono);font-size:11px;color:var(--accent)}
+.essence{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:24px;align-items:center}
+@media (max-width:860px){.essence{grid-template-columns:1fr}.shift{grid-template-columns:minmax(0,1fr) 24px minmax(0,1fr)}.shift p{grid-column:1 / -1}}
+@media (max-width:560px){.tr-row{grid-template-columns:1fr}.tr-arrow{transform:rotate(90deg);height:18px}}
+.judge td:first-child{white-space:nowrap}
+.judge td:nth-child(2){font-weight:700;color:var(--ink)}
+.judge td{color:var(--muted)}
+.stage{font-family:var(--f-mono);font-size:10.5px;font-weight:500;padding:1px 6px;border-radius:4px;margin-left:8px;vertical-align:2px;white-space:nowrap}
+.stage.v{background:var(--accent-soft);color:var(--accent)}
+.stage.e{background:var(--signal-soft);color:var(--signal)}
+.stage.f{background:var(--line);color:var(--muted)}
+.card .biz,.card .risk{font-size:13.5px;color:var(--ink)}
+.card .biz::before{content:"怎么赚钱 · ";font-family:var(--f-mono);font-size:11px;color:var(--accent)}
+.card .risk::before{content:"关键风险 · ";font-family:var(--f-mono);font-size:11px;color:var(--signal)}
+.srcs{font-size:12px;color:var(--muted);max-width:var(--read)}
+.memo{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;display:grid;gap:16px}
+.memo-head{display:grid;gap:8px}
+.memo-head .tag{justify-self:start}
+.memo-head h4{font-size:21px}
+.fields{display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px 18px;align-items:baseline}
+.fields .fl{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.04em;color:var(--muted)}
+.fields p{font-size:14.5px;line-height:1.75}
+.chain{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chain span{font-size:13px;padding:4px 10px;border-radius:6px;background:var(--bg);border:1px solid var(--line)}
+.chain span.me{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:500}
+.chain i{font-style:normal;color:var(--muted);font-family:var(--f-mono)}
+.memo-take{font-size:14.5px;padding:12px 16px;border-radius:10px;background:var(--signal-soft)}
+.memo-take::before{content:"投资启示 · ";font-family:var(--f-mono);font-size:11px;color:var(--signal)}
+@media (max-width:560px){.fields{grid-template-columns:1fr;gap:2px}.fields p,.fields .chain{margin-bottom:10px}.memo{padding:18px}}
+/* interactive bits */
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.btn{appearance:none;font:500 14px var(--f-body);padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:border-color .15s,background .15s}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--muted)}
+.btn.sm{font-size:13px;padding:6px 12px;border-radius:999px}
+.btn[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.sim-head{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
+.sim-head p{font-size:14.5px;color:var(--muted);flex:1 1 280px}
+.sim-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.sim-stats div{background:var(--bg);border-radius:10px;padding:10px 14px;display:grid;gap:2px}
+.sim-stats b{font-family:var(--f-mono);font-size:20px;font-weight:500;color:var(--ink)}
+.sim-note{font-size:14px;color:var(--ink);min-height:1.8em}
+.calc label{display:flex;justify-content:space-between;gap:12px;font-size:14px;color:var(--muted);margin-top:4px}
+.calc output{font-family:var(--f-mono);color:var(--ink);font-variant-numeric:tabular-nums}
+.calc input[type=range]{width:100%;accent-color:var(--accent);margin:0}
+.calc-out{background:var(--accent-soft);border-radius:10px;padding:14px 16px;display:grid;gap:2px;margin-block:6px}
+.calc-eq{font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+.calc-big{font-size:15px;color:var(--ink)}
+.calc-big b{font-family:var(--f-mono);font-size:34px;font-weight:500;color:var(--accent);margin-right:4px}
+.calc-sub{font-size:13.5px;color:var(--ink)}
+.calc-sub b{font-family:var(--f-mono);color:var(--accent)}
+.ent-tabs{display:flex;flex-wrap:wrap;gap:8px}
+.ent-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
+.ent-left,.ent-right{display:grid;gap:12px;align-content:start;min-width:0}
+.ent-chips{display:flex;flex-wrap:wrap;gap:8px}
+.ent-chip{appearance:none;font:14px var(--f-body);text-align:left;padding:7px 12px 7px 10px;border-radius:8px;border:1px dashed var(--line);background:var(--bg);color:var(--ink);cursor:pointer;display:flex;gap:8px;align-items:center;transition:all .15s}
+.ent-chip:hover{border-color:var(--accent)}
+.ent-chip[aria-pressed="true"]{border-style:solid;border-color:var(--accent);background:var(--accent-soft)}
+.ent-chip i,.ent-legend span{font-style:normal;font-family:var(--f-mono);font-size:10.5px;padding:1px 6px;border-radius:4px}
+.src-ask{background:var(--signal-soft);color:var(--signal)}
+.src-mem{background:var(--accent-soft);color:var(--accent)}
+.src-see{background:var(--line);color:var(--ink)}
+.ent-legend{display:flex;gap:8px;font-size:12px;color:var(--muted)}
+.ent-meter{display:grid;gap:6px}
+.ent-meter-top{display:flex;justify-content:space-between;align-items:baseline}
+.ent-meter b{font-family:var(--f-mono);font-size:26px;font-weight:500;color:var(--signal);transition:color .3s}
+.ent-meter i{display:block;height:10px;border-radius:5px;background:var(--line);overflow:hidden}
+.ent-meter i span{display:block;height:100%;background:var(--signal);border-radius:5px;transition:width .35s ease,background .3s}
+.ent.done .ent-meter b{color:var(--accent)}
+.ent.done .ent-meter i span{background:var(--accent)}
+.ent-out{background:var(--bg);border-radius:10px;padding:14px 16px;display:grid;gap:8px;min-height:180px;align-content:start}
+.ent.done #ent-status{color:var(--accent)}
+.ent-out ul{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+.ent-out li{font-size:14px;padding-left:16px;position:relative;line-height:1.6}
+.ent-out li::before{content:"✓";position:absolute;left:0;color:var(--accent);font-size:12px}
+.ent-out li.empty{color:var(--muted);padding-left:0}
+.ent-out li.empty::before{content:none}
+@media (max-width:860px){.ent-grid{grid-template-columns:1fr}.sim-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (prefers-reduced-motion:reduce){#plbars rect,.ent-meter i span{transition:none}}
+@media (prefers-reduced-motion:no-preference){
+  .panel:not([hidden]){animation:rise .45s ease both}
+  @keyframes rise{from{transform:translateY(8px)}to{transform:none}}
+}
+</style>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <p class="mono">AI 产品经理 · 正在走向风险投资</p>
+      <h1>做过 AI 产品从 <span style="white-space:nowrap">0 到 1</span>，<br>接下来想<em>判断</em>下一个 <span style="white-space:nowrap">0 到 1。</span></h1>
+      <p class="lede">做 AI 产品的三年里，我把用户说不清的需求翻译成产品，把模型能力翻译成用户价值。这里记录我对投资、几个细分赛道，以及我自己的思考。</p>
+      <div class="roles">
+        <span class="chip">Shopee</span><span class="chip">腾讯元宝</span><span class="chip">腾讯会议</span><span class="chip">钉钉</span><span class="chip">Walmart Global Tech</span><span class="chip">CMU</span><span class="chip">HKUST</span>
+      </div>
+    </div>
+    <div class="ticker" aria-label="关键数字">
+      <div class="tk"><b>+50%</b><p><strong>让一个 AI 助手的日活涨了一半</strong><span>腾讯元宝 DAU · 7 日留存同步 +20%</span></p></div>
+      <div class="tk"><b>0→1</b><p><strong>亲历大模型 C 端产品从 0 到 1</strong><span>腾讯元宝 · 腾讯会议 AI 小助手 · 智能纪要（周留存 +15%）</span></p></div>
+      <div class="tk"><b>百万级</b><p><strong>为百万级读者追踪 AI 前沿</strong><span>AI 垂类公众号 · 选题与撰写 · 持续一年</span></p></div>
+      <div class="tk"><b>8 城</b><p><strong>在 8 座城市学习和工作过</strong><span>香港 · 新加坡 · 首尔 · 悉尼 · 匹兹堡 · 加州 · 杭州 · 深圳</span></p></div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabbar" aria-label="主要板块">
+  <div class="wrap" role="tablist">
+    <button class="tab" role="tab" id="t-invest" aria-controls="invest" aria-selected="true"><small>01</small>投资如何赚钱</button>
+    <button class="tab" role="tab" id="t-ai" aria-controls="ai" aria-selected="false"><small>02</small>我的赛道思考</button>
+    <button class="tab" role="tab" id="t-me" aria-controls="me" aria-selected="false"><small>03</small>为什么是我</button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ============ TAB 1 ============ -->
+<article class="panel" id="invest" role="tabpanel" aria-labelledby="t-invest">
+  <div class="panel-head read">
+    <p class="mono">How investment makes money</p>
+    <h2>投资如何赚钱，VC 又凭什么赚钱</h2>
+    <p>所有投资回报都来自同一个式子，不同的投资方式押注的是式子里不同的变量。VC 押注的是其中波动最大的那一项。估值，本质上就是把一家公司的未来翻译成今天的价格。</p>
+  </div>
+
+  <section class="block">
+    <p class="mono kicker">回报从哪里来</p>
+    <h3>一个公式看懂所有投资</h3>
+    <div class="figure">
+      <svg viewBox="0 0 960 150" role="img" aria-label="投资回报公式：回报等于买入价格的折扣乘以企业价值增长乘以退出时的估值与流动性">
+        <style>.fx-box{fill:var(--bg);stroke:var(--line)}.fx-hl{fill:var(--accent-soft);stroke:var(--accent)}.fx-t{fill:var(--ink);font:700 22px var(--f-display)}.fx-s{fill:var(--muted);font:13px var(--f-body)}.fx-op{fill:var(--muted);font:500 28px var(--f-mono)}</style>
+        <rect class="fx-box" x="0" y="20" width="170" height="100" rx="12"/><text class="fx-t" x="85" y="68" text-anchor="middle">投资回报</text><text class="fx-s" x="85" y="94" text-anchor="middle">Return</text>
+        <text class="fx-op" x="196" y="80" text-anchor="middle">=</text>
+        <rect class="fx-box" x="222" y="20" width="210" height="100" rx="12"/><text class="fx-t" x="327" y="68" text-anchor="middle">买得便宜</text><text class="fx-s" x="327" y="94" text-anchor="middle">入场估值 / 信息差</text>
+        <text class="fx-op" x="458" y="80" text-anchor="middle">×</text>
+        <rect class="fx-hl" x="484" y="20" width="230" height="100" rx="12"/><text class="fx-t" x="599" y="68" text-anchor="middle">价值增长</text><text class="fx-s" x="599" y="94" text-anchor="middle">收入、利润、用户规模</text>
+        <text class="fx-op" x="740" y="80" text-anchor="middle">×</text>
+        <rect class="fx-box" x="766" y="20" width="194" height="100" rx="12"/><text class="fx-t" x="863" y="68" text-anchor="middle">卖得出去</text><text class="fx-s" x="863" y="94" text-anchor="middle">退出估值 / 流动性</text>
+      </svg>
+      <figcaption>公募基金主要赚“价值增长”中确定性较高的部分；并购基金靠杠杆和运营改善；VC 赚的是早期极低的入场价，乘以少数公司几十上百倍的价值增长。</figcaption>
+    </div>
+    <div class="scroll-x">
+      <table>
+        <thead><tr><th>类型</th><th>投资阶段</th><th>主要回报来源</th><th>收益分布</th><th>核心能力</th></tr></thead>
+        <tbody>
+          <tr><td>二级市场</td><td>上市公司</td><td>盈利增长 + 估值修复 + 分红</td><td>接近正态，靠胜率</td><td>研究与定价</td></tr>
+          <tr><td>PE / 并购</td><td>成熟期企业</td><td>杠杆 + 运营改善 + 估值倍数提升</td><td>较集中，靠控制力</td><td>交易结构与管理</td></tr>
+          <tr><td>VC</td><td>早期到成长期</td><td>极低入场价 × 指数级增长</td><td><mark>幂律分布</mark>，靠赔率</td><td>识别人和趋势</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="block" id="vc">
+    <p class="mono kicker">尤其是 VC</p>
+    <h3>VC 的赚钱机器：钱怎么进来，怎么回去</h3>
+    <div class="body-text">
+      <p>VC 基金是一个有期限的合伙企业，通常存续 <strong>10 年左右</strong>：前 3–5 年投资，后 5 年陪伴和退出。出钱的叫 LP（有限合伙人，如母基金、保险、主权基金、大学捐赠基金），管钱的叫 GP（普通合伙人，也就是投资团队）。</p>
+    </div>
+    <div class="figure">
+      <div class="flow">
+        <div class="node"><span class="mono">Step 1</span><b>LP 承诺出资</b><span>例如募集 10 亿美元，按项目进度分期缴款</span></div>
+        <div class="node hl"><span class="mono">Step 2</span><b>GP 投资</b><span>投 20–40 家公司，单笔持股常见 10%–20%</span></div>
+        <div class="node"><span class="mono">Step 3</span><b>投后陪伴</b><span>招人、融资、战略、客户资源，并在后续轮次追加</span></div>
+        <div class="node"><span class="mono">Step 4</span><b>退出</b><span>IPO、并购、老股转让、S 基金接盘</span></div>
+        <div class="node hl"><span class="mono">Step 5</span><b>分配</b><span>现金回到 LP 和 GP，按约定瀑布顺序分</span></div>
+      </div>
+      <div class="waterfall">
+        <div><b>① 管理费 ≈ 2%/年</b>维持团队运转，不是 GP 真正的财富来源</div>
+        <div><b>② 先还 LP 本金 + 门槛收益</b>门槛收益常见约 8%/年</div>
+        <div><b>③ 超额收益 80 / 20</b>GP 拿约 20% 的业绩报酬（Carry），这才是 GP 的主要回报</div>
+      </div>
+      <figcaption>“2 + 20”是行业常见结构，具体条款因基金而异。</figcaption>
+    </div>
+
+    <h4>幂律：VC 的回报几乎全靠少数项目</h4>
+    <div class="figure">
+      <div class="sim-head">
+        <p>假设你管理一支基金，投 20 个项目，每个投 1 份。点“再投一次”，看看会发生什么。</p>
+        <div class="btns">
+          <button type="button" class="btn primary" id="sim-one">再投一次</button>
+          <button type="button" class="btn" id="sim-many">连投 100 支</button>
+          <button type="button" class="btn ghost" id="sim-reset">重置</button>
+        </div>
+      </div>
+      <svg id="plsvg" viewBox="0 0 960 300" role="img" aria-label="基金模拟：20 个项目按回报倍数从低到高排列">
+        <style>.pl-bar{fill:var(--line)}.pl-top{fill:var(--accent)}.pl-mid{fill:var(--signal)}.pl-ax{stroke:var(--line)}.pl-l{fill:var(--muted);font:12px var(--f-mono)}.pl-a{fill:var(--ink);font:700 15px var(--f-body)}.pl-s{fill:var(--muted);font:13px var(--f-body)}#plbars rect{transition:y .35s ease,height .35s ease}</style>
+        <line class="pl-ax" x1="40" y1="250" x2="940" y2="250"/>
+        <line class="pl-ax" x1="40" y1="250" x2="40" y2="40" stroke-dasharray="3 4"/>
+        <line class="pl-ax" x1="40" y1="145" x2="580" y2="145" stroke-dasharray="2 6"/>
+        <text class="pl-l" x="34" y="254" text-anchor="end">0x</text>
+        <text class="pl-l" x="34" y="149" text-anchor="end" id="pl-ymid">24x</text>
+        <text class="pl-l" x="34" y="44" text-anchor="end" id="pl-ymax">48x</text>
+        <g id="plbars"></g>
+        <text class="pl-a" x="610" y="80" id="pl-a1">1 个项目 ≈ 基金 58% 的回报</text>
+        <text class="pl-s" x="610" y="106" id="pl-a2">前 3 个项目合计贡献约 80%</text>
+        <text class="pl-s" x="610" y="130" id="pl-a3">7 个项目归零，基金整体仍有约 4.1x</text>
+        <text class="pl-l" x="310" y="280" text-anchor="middle">20 个项目，按回报倍数从低到高排列</text>
+      </svg>
+      <div class="sim-stats tnum">
+        <div><span class="mono">本支基金</span><b id="s-mult">4.1x</b></div>
+        <div><span class="mono">已模拟</span><b id="s-n">0 支</b></div>
+        <div><span class="mono">跑赢 3 倍</span><b id="s-win">–</b></div>
+        <div><span class="mono">没回本</span><b id="s-lose">–</b></div>
+      </div>
+      <p class="sim-note" id="s-note">先看一支示意基金：7 个项目归零，靠一个 48 倍的项目撑起了整支基金。</p>
+      <figcaption>回报分布按经验设定：约 45% 的项目归零，约 1% 的项目回报 30 倍以上。倍数未扣管理费和 Carry，仅为示意。</figcaption>
+    </div>
+
+    <div class="grid g2">
+      <div class="card calc">
+        <span class="tag">反推计算器</span>
+        <h4>你的基金需要找到多大的公司？</h4>
+        <label for="c-size">基金规模 <output id="o-size">10 亿美元</output></label>
+        <input type="range" id="c-size" min="1" max="30" step="1" value="10">
+        <label for="c-mult">目标回报 <output id="o-mult">3.0 倍</output></label>
+        <input type="range" id="c-mult" min="1.5" max="5" step="0.5" value="3">
+        <label for="c-own">退出时平均持股 <output id="o-own">10%</output></label>
+        <input type="range" id="c-own" min="5" max="25" step="1" value="10">
+        <div class="calc-out">
+          <p class="calc-eq tnum" id="c-eq">10 亿 × 3.0 倍 ÷ 10% =</p>
+          <p class="calc-big tnum"><b id="c-total">300</b> 亿美元</p>
+          <p class="calc-sub">组合退出总市值，相当于 <b id="c-n">3</b> 家百亿美元公司</p>
+        </div>
+        <p>所以 VC 问的第一个问题不是“这家公司会不会成功”，而是“它成功时能有多大”。基金越大，越需要更大的公司。</p>
+      </div>
+      <div class="card">
+        <span class="tag warm">J 曲线</span>
+        <h4>前几年账面一定是亏的</h4>
+        <svg viewBox="0 0 400 140" role="img" aria-label="J 曲线示意：基金净现金流前几年为负，约第 6 年转正">
+          <style>.jc-ax{stroke:var(--line)}.jc-p{fill:none;stroke:var(--accent);stroke-width:2.5}.jc-l{fill:var(--muted);font:11px var(--f-mono)}</style>
+          <line class="jc-ax" x1="20" y1="70" x2="390" y2="70"/>
+          <path class="jc-p" d="M20 70 C 60 95, 90 118, 130 120 S 190 108, 220 82 S 300 30, 390 14"/>
+          <circle cx="236" cy="70" r="4" fill="var(--signal)"/>
+          <text class="jc-l" x="244" y="88">≈ 第 6 年回正</text>
+          <text class="jc-l" x="20" y="134">第 0 年</text>
+          <text class="jc-l" x="390" y="134" text-anchor="end">第 10 年</text>
+          <text class="jc-l" x="112" y="104">管理费 + 投资</text>
+        </svg>
+        <p>早期只有出资和管理费，回报要等退出。LP 看三个指标：<strong>TVPI</strong>（账面总价值倍数）、<strong>DPI</strong>（已分配现金倍数）、<strong>IRR</strong>（内部收益率）。近两年中国一级市场越来越强调 DPI，即真正落袋的现金。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="market">
+    <p class="mono kicker">2026 年的一级市场</p>
+    <h3>钱多了，但更集中，也更看重退出</h3>
+    <div class="body-text"><p>原理之外，更重要的是今天这个市场正在发生什么。我按基金的三个环节整理了近两年的数据。</p></div>
+    <div class="grid g3">
+      <div class="card">
+        <span class="tag">募资 · 钱从哪来</span>
+        <h4>回暖，国资主导</h4>
+        <ul>
+          <li>2025 年新募基金 <span class="kpi">16,483 亿元</span>，同比 +14%；2026 年上半年 10,495 亿元，同比 +50%</li>
+          <li>2024 年国资背景 LP 出资占比约 <span class="kpi">89%</span></li>
+          <li>2025 年底国家创业投资引导基金启动，中央财政出资 1,000 亿元，方向是“投早、投小、投长期、投硬科技”</li>
+          <li>政策鼓励政府投资基金降低或取消返投比例</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tag">投资 · 钱流向哪</span>
+        <h4>向 AI 和硬科技集中</h4>
+        <ul>
+          <li>2025 年披露投资金额 <span class="kpi">9,287 亿元</span>，同比 +46%；半导体及电子设备 2,132 亿元，同比 +60%</li>
+          <li>2026 年上半年 IT 行业以 2,155 亿元居首，主要由大模型、算力和机器人推动</li>
+          <li>具身智能 2026 年上半年融资约 <span class="kpi">935 亿元</span>，约为上年同期的 5 倍</li>
+          <li>消费并没有消失：2025 年消费零售投资案例数反而接近翻倍</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tag">退出 · 钱怎么回来</span>
+        <h4>港股窗口打开，但波动大</h4>
+        <ul>
+          <li>港股 2025 年 117 家公司上市，募资 2,857 亿港元，重回全球第一；2026 年前三季度募资超 <span class="kpi">3,880 亿港元</span></li>
+          <li>智谱、MiniMax 于 2026 年 1 月先后在港股上市；MiniMax 首日涨约 109%，之后股价从高点回落超 80%</li>
+          <li>2026 年上半年 IPO 退出 1,732 笔、并购退出 368 笔，均接近翻倍或更多</li>
+          <li>出资人越来越看重 DPI，也就是真正收回的现金</li>
+        </ul>
+      </div>
+    </div>
+    <h4>所以呢：我会怎么调整投资思路</h4>
+    <div class="grid g2">
+      <div class="card"><span class="tag warm">判断 1</span><h4>热门赛道要更早，或者找非共识</h4><p>钱集中涌向 AI 和具身智能，头部项目估值水涨船高。要么在更早期进入，要么去看被冷落的方向。消费案例数翻倍说明，非共识的机会一直都在。</p></div>
+      <div class="card"><span class="tag warm">判断 2</span><h4>懂产业的投资人更值钱</h4><p>国资是最大的出资人，投资既要算财务回报，也要服务产业目标。能看懂产业链上下游、帮公司对接产业资源的投资人，更容易募到钱，也更容易帮到公司。</p></div>
+      <div class="card"><span class="tag warm">判断 3</span><h4>投的时候就要想好怎么退</h4><p>退出窗口打开了，但 MiniMax 的股价曲线说明窗口里也有剧烈波动。退出路径、节奏和分批纪律，应该在投资时就写进判断里。</p></div>
+      <div class="card"><span class="tag warm">判断 4</span><h4>能更早产生收入的公司更受欢迎</h4><p>出资人看重 DPI，基金也会更偏爱商业化路径清晰的公司。“技术很强但不知道谁付钱”的项目会越来越难融资。</p></div>
+    </div>
+    <p class="srcs">数据来源：清科研究中心 2025 年度及 2026 年上半年报告；执中《中国私募股权市场出资人解读报告 2025》；财新；IT桔子；Wind；毕马威 2026 年三季度 IPO 市场回顾；虎嗅、钛媒体相关报道。</p>
+  </section>
+
+  <section class="block" id="idg">
+    <p class="mono kicker">案例 · IDG 资本</p>
+    <h3>IDG 资本：跟着技术周期找人</h3>
+    <div class="body-text">
+      <p>IDG 资本 1992 年进入中国，是最早一批在中国做风险投资的外资机构。从 PC 互联网、移动互联网到今天的 AI 和具身智能，它在每个技术周期都留下了代表性案例。以下案例据公开报道整理，我更关注最近十年的 AI 布局。</p>
+    </div>
+
+    <p class="mono era-label">AI 与硬科技时代</p>
+    <div class="figure">
+      <div class="case">
+        <div class="yr">2014<small>商汤科技</small></div>
+        <div>
+          <h4>商汤：在深度学习还没出圈时投一篇论文背后的团队</h4>
+          <p>2014 年 11 月，IDG 成为商汤的天使轮投资人，投资数千万美元，2016 年又参与 B 轮。当时商汤的核心资产是港中文汤晓鸥团队在人脸识别上的论文和算法，还没有成熟的商业模式。2021 年 12 月，商汤在港交所上市，被称为“AI 第一股”。</p>
+          <p class="lesson">技术拐点出现时，顶尖科研团队本身就是最稀缺的资产，而且敢在商业化之前下注的机构很少。</p>
+        </div>
+      </div>
+      <div class="case">
+        <div class="yr">2021+<small>MiniMax</small></div>
+        <div>
+          <h4>MiniMax：从商汤走出来的下一代大模型公司</h4>
+          <p>MiniMax 2021 年 12 月由几位前商汤研究员创立，产品包括 AI 角色社交应用 Talkie、视频生成产品海螺 AI，以及自研的语言、语音和音乐模型。IDG 是它的投资方之一。2026 年 1 月 9 日，MiniMax 在港交所上市。</p>
+          <p class="lesson">上一个周期投出的公司，会成为下一个周期的人才来源。持续跟踪人才谱系，就能在新周期的起点再次找到最好的团队。</p>
+        </div>
+      </div>
+      <div class="case">
+        <div class="yr">2022<small>拓竹科技</small></div>
+        <div>
+          <h4>拓竹：把工厂搬上普通人的书桌</h4>
+          <p>拓竹 2020 年由前大疆消费级无人机业务负责人陶冶和几位工程师创立。据报道，IDG 在 2022 年初进入，2024 年作为老股东继续跟投。拓竹用消费电子的思路重做了 3D 打印机：开箱即用、多色打印、高速稳定，再配上 MakerWorld 模型社区，把一个极客工具变成了大众消费品。据券商研报，拓竹 2024 年营收预计达 55–60 亿元，净利润接近 20 亿元，是典型的出海冠军。</p>
+          <p class="lesson">把专业工具做成消费品，市场规模会成倍放大。这也印证了我在新消费里说的“定制化成本趋近于零”：每个人都能在家生产属于自己的东西。</p>
+        </div>
+      </div>
+      <div class="case">
+        <div class="yr">2017–2026<small>小鹏系</small></div>
+        <div>
+          <h4>小鹏：陪一位创始人从智能汽车做到人形机器人</h4>
+          <p>2017 年底，IDG 领投小鹏汽车 A+ 轮，之后连续参与 B 轮和 C 轮。小鹏 2020 年在纽交所上市后，IDG 又在 2021 年领投飞行汽车公司小鹏汇天 5 亿美元的 A 轮，2022 年投资机器人公司鹏行。2026 年 8 月，IDG 领投小鹏机器人业务超 9 亿美元的首轮融资，投后估值超 63 亿美元，据报道刷新了中国具身智能单轮融资纪录。</p>
+          <p class="lesson">押注一位创始人，就是押注他对下一个技术形态的判断。智能汽车、飞行汽车、人形机器人用的是同一套能力：感知、决策和执行。</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="mono era-label">互联网时代</p>
+    <div class="mini">
+      <div class="card"><span class="yr2">1999 · 腾讯</span><h4>QQ 还没收入时就投了</h4><p>与盈科数码共同投资约 220 万美元。用户增长曲线比当下的收入更说明价值。</p></div>
+      <div class="card"><span class="yr2">1999 · 携程</span><h4>投一支互补的团队</h4><p>成立初期即参与，2003 年纳斯达克上市。团队结构本身就是尽调对象。</p></div>
+      <div class="card"><span class="yr2">2000 · 百度</span><h4>投人 × 赛道</h4><p>与 DFJ 联合领投约 1000 万美元。2005 年上市首日涨幅超过 350%。</p></div>
+      <div class="card"><span class="yr2">2010 · 小米</span><h4>从用户社区倒推产品</h4><p>早期轮次参与并持续跟投，2018 年港交所上市。抓住了平台切换的窗口。</p></div>
+    </div>
+
+    <div class="grid g3">
+      <div class="card"><span class="tag">可复用的打法 1</span><h4>跟踪人才谱系</h4><p>投出商汤之后，又投了从商汤走出来的 MiniMax。上一个周期的公司，是下一个周期最好的人才来源。</p></div>
+      <div class="card"><span class="tag">可复用的打法 2</span><h4>系列化押注同一位创始人</h4><p>从小鹏汽车到小鹏汇天、鹏行和小鹏机器人，IDG 持续投资同一位创始人的多个新业务。</p></div>
+      <div class="card"><span class="tag">可复用的打法 3</span><h4>早进入，多轮跟投</h4><p>小鹏从 A+ 轮跟到 C 轮，商汤从天使轮跟到 B 轮。早期拿到便宜的份额，确认后再加码。</p></div>
+    </div>
+    <p class="quote">IDG 一次次读懂了别人还读不懂的信号：把一篇论文读成商汤，把一条用户增长曲线读成腾讯。从腾讯到商汤，再到拓竹和小鹏机器人，方法没有变：在一个技术周期的起点，找到最懂这件事的人，然后长期陪他们走完周期。</p>
+  </section>
+</article>
+
+<!-- ============ TAB 2 ============ -->
+<article class="panel" id="ai" role="tabpanel" aria-labelledby="t-ai" hidden>
+  <div class="panel-head read">
+    <p class="mono">Notes on sectors · open to anything new</p>
+    <h2>我对几个细分赛道的思考</h2>
+    <p>下面是我此刻最感兴趣、也有一些一手体感的方向：AI 应用、新消费、医疗。它们不是一份完整的行业地图，也不是我的边界。技术每隔几个月就会改写一次规则，我对任何新的事物和变化都保持开放。</p>
+  </div>
+  <div class="subnav" aria-label="本页章节">
+    <button type="button" data-go="ai-stack">底层框架</button>
+    <button type="button" data-go="ai-translate">翻译与熵</button>
+    <button type="button" data-go="ai-app">AI 应用</button>
+    <button type="button" data-go="ai-consumer">新消费</button>
+    <button type="button" data-go="ai-health">医疗与制药</button>
+    <button type="button" data-go="ai-open">下一个是什么</button>
+  </div>
+
+  <section class="block" id="ai-stack">
+    <p class="mono kicker">我的底层框架</p>
+    <h3>价值会从“卖铲子”向“用铲子”迁移</h3>
+    <div class="body-text"><p>移动互联网早期，利润先集中在芯片和手机硬件，随后才流向微信、美团、抖音这样的应用。AI 很可能重复这个路径。下面是我对每一层的判断，以及支撑判断的依据和我会盯的验证信号。判断可能会错，所以验证信号比判断本身更重要。</p></div>
+    <div class="scroll-x">
+      <table class="judge">
+        <thead><tr><th>层</th><th>我的判断</th><th>依据</th><th>验证信号</th></tr></thead>
+        <tbody>
+          <tr><td>终端 / 硬件</td><td>新入口的窗口期，但硬件本身难有高毛利</td><td>AI 眼镜、AI 耳机、具身机器人密集发布，价格快速下探到消费级</td><td>日均使用时长、30 天后的佩戴率、服务订阅转化率</td></tr>
+          <tr><td>应用层</td><td>长期最大的价值池，但赢家高度集中</td><td>模型调用成本持续下降，应用毛利改善；移动互联网的价值最终也沉淀在应用</td><td>AI 原生应用的留存曲线、付费率，以及是否出现非大厂的头部产品</td></tr>
+          <tr><td>中间层</td><td>随 Agent 普及变重要，但容易被上下两层挤压</td><td>MCP 等协议快速普及；云厂商和模型厂商也在把评估、记忆等能力内置</td><td>独立公司的收入增速，是否被平台“免费内置”</td></tr>
+          <tr><td>模型层</td><td>能力趋同、价格下行，少数玩家胜出</td><td>国内外多轮大模型 API 降价；开源模型和闭源模型的差距在缩小</td><td>头部模型间的能力差距、API 单价走势、开源模型的采用率</td></tr>
+          <tr><td>算力层</td><td>短期利润最集中，长期回归基础设施的正常回报</td><td>当前 AI 资本开支主要流向 GPU 和数据中心</td><td>GPU 租赁价格、推理成本、云厂商资本开支增速</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="block" id="ai-translate">
+    <p class="mono kicker">翻译与熵</p>
+    <h3>人说的话和 Agent 听懂的话之间，丢了多少信息？</h3>
+    <div class="body-text">
+      <p>人的表达是高语境的：模糊、省略、依赖默契。Agent 需要的是明确的目标、约束和成功标准。从“人话”到“Agent 能执行的指令”，中间丢失的信息，我把它叫作<strong>熵</strong>。</p>
+      <p>Agent 越来越能干之后，瓶颈正在从“能不能做”转向“有没有理解对”。谁能把这部分熵降下来，谁就掌握了下一代人机交互的入口。</p>
+    </div>
+    <div class="figure">
+      <div class="grid g3">
+        <div class="card"><span class="tag warm">① 意图 → 语言</span><h4>人自己没想清楚，或没说全</h4><p>“帮我订个安静的酒店”。什么算安静？远离马路，还是没有亲子房？</p></div>
+        <div class="card"><span class="tag warm">② 语言 → 执行</span><h4>Agent 缺少上下文</h4><p>它不知道你讨厌高楼层、需要停车位、上次住过的那家踩了坑。</p></div>
+        <div class="card"><span class="tag warm">③ 执行 → 回报</span><h4>人看不懂 Agent 做了什么</h4><p>为什么选这家？比较过哪些？结果对不对，人无从判断，只能盲目信任或全部重查。</p></div>
+      </div>
+      <figcaption>熵在三个环节流失。下面试试把一句“人话”补全成 Agent 能执行的任务。</figcaption>
+    </div>
+
+    <div class="figure ent" id="ent">
+      <div class="ent-tabs" role="group" aria-label="选择例子">
+        <button type="button" class="btn sm" data-sc="0" aria-pressed="true">带娃去三亚</button>
+        <button type="button" class="btn sm" data-sc="1" aria-pressed="false">请客户吃饭</button>
+        <button type="button" class="btn sm" data-sc="2" aria-pressed="false">给妈妈挑礼物</button>
+      </div>
+      <div class="ent-grid">
+        <div class="ent-left">
+          <div class="tr-src" id="ent-src">下周带孩子去三亚玩 3 天，安静点</div>
+          <p class="mono">点击补全上下文</p>
+          <div class="ent-chips" id="ent-chips"></div>
+          <div class="ent-legend"><span class="src-ask">追问</span><span class="src-mem">记忆</span><span class="src-see">看见</span></div>
+        </div>
+        <div class="ent-right">
+          <div class="ent-meter">
+            <div class="ent-meter-top"><span class="mono">剩余熵</span><b class="tnum" id="ent-val">100%</b></div>
+            <i><span id="ent-bar" style="width:100%"></span></i>
+          </div>
+          <div class="ent-out">
+            <p class="mono" id="ent-status">Agent 状态：信息不足，只能猜</p>
+            <ul id="ent-list"><li class="empty">还没有任何约束。Agent 只能按“平均用户”去猜。</li></ul>
+          </div>
+          <div class="btns"><button type="button" class="btn" id="ent-all">全部补全</button><button type="button" class="btn ghost" id="ent-clear">清空</button></div>
+        </div>
+      </div>
+    </div>
+
+    <h4>怎么降低熵：六个方向，也是六类机会</h4>
+    <div class="grid g3">
+      <div class="card"><h4>记忆与个人上下文</h4><p>越懂你，你需要说的就越少。偏好、历史和关系都是上下文。</p><p class="eg2">大模型助手的记忆功能，Mem0 等记忆层创业公司</p><p class="opp">跨应用的个人记忆层</p></div>
+      <div class="card"><h4>澄清式交互</h4><p>像好的产品经理一样追问需求。难点在于每次追问都有成本，要知道问什么、问几次。</p><p class="eg2">深度研究类产品会在开始前先追问需求</p><p class="opp">意图理解与主动澄清</p></div>
+      <div class="card"><h4>先确认计划，再执行</h4><p>人审阅计划而不是事后验收结果。需求文档变成人和 Agent 之间的契约。</p><p class="eg2">编程 Agent 的计划模式：先给方案，确认后再动手</p><p class="opp">计划可视化与人机协作界面</p></div>
+      <div class="card"><h4>指给它看，做给它看</h4><p>多模态降低描述成本。AI 眼镜的第一视角，就是最自然的上下文。</p><p class="eg2">智能眼镜、手机实时视频通话式的 AI 助手</p><p class="opp">第一视角硬件与示范学习</p></div>
+      <div class="card"><h4>统一的协议</h4><p>MCP、A2A 这类协议，让 Agent 与工具、Agent 与 Agent 之间说同一种语言。</p><p class="eg2">MCP（2024 年推出）、A2A（2025 年推出）</p><p class="opp">Agent 中间件与连接器</p></div>
+      <div class="card"><h4>评估与可观测性</h4><p>结果可验证、可解释、可回滚，人才敢把更多事交出去。</p><p class="eg2">Braintrust、LangSmith 等评估与观测平台</p><p class="opp">Agent 评估、审计与监控</p></div>
+    </div>
+
+    <h4>它会引申出的新问题</h4>
+    <div class="grid g2">
+      <div class="card"><span class="tag warm">代理人问题</span><h4>Agent 站在谁那边？</h4><p>当 AI 成为消费者和商家之间的超级中介，平台的 Agent 是替你砍价，还是替商家推销？谁拥有这个中介，谁就拥有新的定价权。</p></div>
+      <div class="card"><span class="tag warm">为 Agent 优化</span><h4>商品要写给机器读</h4><p>搜索引擎优化会被“生成式引擎优化”取代。商品信息、服务条款、评价，都需要变成 Agent 能读懂、能比较的结构。</p></div>
+      <div class="card"><span class="tag warm">责任归属</span><h4>理解错了，谁负责？</h4><p>Agent 下错单、订错票、签错合同，责任在用户、Agent 提供方还是商家？这会催生 Agent 保险、担保和仲裁。</p></div>
+      <div class="card"><span class="tag warm">隐私悖论</span><h4>越懂你，越危险</h4><p>降低熵需要更多上下文，更多上下文意味着更大的数据风险。端侧计算和用户自持数据会因此变得重要。</p></div>
+    </div>
+    <div class="card">
+      <h4>判断这个方向能不能投，我会看三件事</h4>
+      <ul>
+        <li><strong>会不会被内置</strong>：最大的风险是模型厂商或平台把这个能力免费做进自己的产品</li>
+        <li><strong>谁付钱</strong>：开发者、企业还是消费者？付费意愿是否已经被验证</li>
+        <li><strong>能否积累</strong>：用得越多，数据、记忆或连接是否越难被替代</li>
+      </ul>
+    </div>
+    <div class="callout"><span class="mono">回到我自己，也回到投资</span>产品经理的工作，本质上就是消灭这种熵：把用户说不清的需求，翻译成团队和模型都能执行的标准。VC 做的是同一件事，只是对象换成了创始人的愿景和碎片化的信息。也正因为在一线做过这种翻译，我更能分辨哪些公司在真正降低熵，哪些只是在讲一个新概念。</div>
+  </section>
+
+  <section class="block" id="ai-app">
+    <p class="mono kicker">AI 应用</p>
+    <h3>AI 应用：按人的需求来看，而不是按功能</h3>
+    <div class="body-text">
+      <p>讨论 AI 应用时，焦点常常落在 B 端提效上。但人的需求远不止“把事做完”。我更喜欢从需求出发：每一种基本需求都会被 AI 重新满足一次，也都会诞生新的入口和新的公司。</p>
+    </div>
+    <div class="grid g3">
+      <div class="card"><span class="tag">做事 · 效率</span><h4>从工具到数字员工</h4><p class="eg2">Agent、垂类工作流、AI 店长</p><p class="biz">从按席位订阅转向按任务、按结果计费</p><p class="risk">模型厂商自己下场做通用 Agent</p><p class="look">按结果付费能否成立，准确率能否高到“不用检查”。</p></div>
+      <div class="card"><span class="tag">知道 · 信息</span><h4>从找链接到直接拿到答案</h4><p class="eg2">豆包、元宝、Perplexity</p><p class="biz">广告、导购佣金、会员</p><p class="risk">入口被大厂把持，获客成本高</p><p class="look">通用入口之外，购物决策、医疗、法律这类垂直信息有没有独立机会。</p></div>
+      <div class="card"><span class="tag">陪伴 · 情感</span><h4>从刷内容到建立关系</h4><p class="eg2">Talkie、星野、Character.ai</p><p class="biz">订阅、虚拟道具、角色定制</p><p class="risk">新鲜感衰减快；内容安全与未成年人保护</p><p class="look">长期留存和付费，关系能否沉淀成记忆和身份。</p></div>
+      <div class="card"><span class="tag">表达 · 创作</span><h4>人人都能做出作品</h4><p class="eg2">可灵、海螺 AI、Suno</p><p class="biz">订阅加按次生成</p><p class="risk">视频生成算力成本高，毛利承压；版权争议</p><p class="look">工具能否长成社区，作品能否被消费和交易。</p></div>
+      <div class="card"><span class="tag">成长 · 学习与健康</span><h4>人人都有私人导师和教练</h4><p class="eg2">AI 一对一辅导、AI 健康管理</p><p class="biz">按课程或效果付费，或绑定学习机等硬件</p><p class="risk">效果难证明；监管要求高</p><p class="look">效果能否被验证，用户是否愿意为结果付费。</p></div>
+      <div class="card"><span class="tag">玩 · 娱乐</span><h4>从预设剧情到无限生成</h4><p class="eg2">AI 原生游戏、互动叙事</p><p class="biz">买断、内购、订阅</p><p class="risk">推理成本可能吃掉利润；“好玩”很难提前验证</p><p class="look">好玩能否持续，而不只是第一次的新奇。</p></div>
+    </div>
+
+    <h4>VC 最常问的问题：大厂会不会做？</h4>
+    <div class="grid g2">
+      <div class="card"><span class="tag warm">大厂的优势</span><h4>入口、流量、算力和补贴</h4><p>通用助手、搜索问答、办公提效这类场景，大厂有现成的用户入口和生态，还能长期补贴。创业公司在正面战场很难赢。</p></div>
+      <div class="card"><span class="tag">创业公司的窗口</span><h4>大厂不做或做不好的地方</h4><ul><li><strong>小而深的场景</strong>：在大厂做 AI 产品时我的体感是，资源会优先投向能拉动大盘 DAU 的通用场景，小而深的需求往往排不上优先级</li><li><strong>重运营、重交付</strong>：需要线下服务、专业审核或行业资质的垂类</li><li><strong>软硬结合</strong>：需要供应链和硬件迭代能力的产品</li><li><strong>社区和调性</strong>：通用助手很难做出鲜明的社区氛围和创作者生态</li></ul></div>
+    </div>
+
+    <h4>来自 C 端产品一线的四个判断</h4>
+    <div class="grid g2">
+      <div class="card"><span class="tag warm">留存</span><h4>新奇带来下载，任务完成带来留存</h4><p>在元宝，我们用 DAU 和留存数据给 Chatbot 能力排优先级，DAU 提升 50%、7 日留存提升 20%。看 AI 应用，我会先看留存曲线，再看下载量。</p></div>
+      <div class="card"><span class="tag warm">场景</span><h4>高频刚需的场景才有高留存</h4><p>我们发现 C 端用户在办公场景的需求差异化明显，相关场景留存达到 40%。容易被替代的是泛泛的聊天，难被替代的是嵌进日常习惯的产品。</p></div>
+      <div class="card"><span class="tag warm">评估</span><h4>评估能力本身就是壁垒</h4><p>“效果好不好”必须拆成可量化标准。建了评估体系后，GSB 中 Good 占比提升 5%，用户投诉下降 12%。能持续评估的团队，才能吃到模型升级的红利。</p></div>
+      <div class="card"><span class="tag warm">变现</span><h4>C 端变现不只有订阅</h4><p>订阅之外，广告、导购、硬件绑定、按次付费都在被验证。能把 AI 嵌进已有消费链路的产品，更容易赚到钱。</p></div>
+    </div>
+
+    <div class="grid g2">
+      <div class="card">
+        <h4>真正的护城河</h4>
+        <ul>
+          <li><strong>数据飞轮</strong>：用户使用会产生专有数据，反过来提升效果</li>
+          <li><strong>记忆与关系</strong>：产品越懂你，换掉它的成本越高</li>
+          <li><strong>社区与内容</strong>：用户创作的作品和关系网络</li>
+          <li><strong>评估与迭代速度</strong>：比对手更快把新模型变成好体验</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>容易被高估的壁垒</h4>
+        <ul>
+          <li>Prompt 和简单的模型套壳</li>
+          <li>只是在补当前模型的短板，下一代模型可能直接覆盖</li>
+          <li>靠投放拉来的下载量和 DAU</li>
+          <li>没有清晰付费方的“酷炫演示”</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout"><span class="mono">我看 AI 应用会问的一句话</span>当下一代模型强 10 倍时，这家公司是变得更强，还是被替代？好的 AI 应用顺着模型进步的方向走，模型越强，它越受益。</div>
+  </section>
+  <section class="block" id="ai-consumer">
+    <p class="mono kicker">新消费</p>
+    <h3>新消费：AI 带来的是三次成本革命</h3>
+    <div class="body-text">
+      <p>AI 带来的不是“旧产品加个 AI 功能”的改良。所有新消费的本质都是成本结构的重构，而 AI 让三类成本同时趋近于零。三者叠加，消费从<strong>“买标准化商品”</strong>变成<strong>“买专属结果”</strong>，这是和互联网时代最本质的区别。</p>
+    </div>
+    <div class="grid g3">
+      <div class="card cost">
+        <svg viewBox="0 0 200 64" aria-hidden="true"><path d="M4 8 C 50 10, 70 50, 196 56" fill="none" stroke="var(--accent)" stroke-width="2.5"/><line x1="4" y1="58" x2="196" y2="58" stroke="var(--line)"/></svg>
+        <span class="mono">成本 → 0</span>
+        <p class="big">定制化成本</p>
+        <p>工业时代只能大规模生产标准品，因为定制太贵。AI 让“大规模个性化”成为可能，每个人拿到专属产品，边际成本几乎不增加。</p>
+      </div>
+      <div class="card cost">
+        <svg viewBox="0 0 200 64" aria-hidden="true"><path d="M4 8 C 40 12, 60 52, 196 56" fill="none" stroke="var(--accent)" stroke-width="2.5"/><line x1="4" y1="58" x2="196" y2="58" stroke="var(--line)"/></svg>
+        <span class="mono">成本 → 0</span>
+        <p class="big">专业技能成本</p>
+        <p>医生、律师、设计师、健身教练曾是稀缺资源，只有少数人能独享。AI 把专业技能的边际成本压到几乎为零，普通人也能拥有专属顾问。</p>
+      </div>
+      <div class="card cost">
+        <svg viewBox="0 0 200 64" aria-hidden="true"><path d="M4 8 C 60 8, 80 54, 196 56" fill="none" stroke="var(--accent)" stroke-width="2.5"/><line x1="4" y1="58" x2="196" y2="58" stroke="var(--line)"/></svg>
+        <span class="mono">成本 → 0</span>
+        <p class="big">代理执行成本</p>
+        <p>以前消费要自己搜索、比较、决策、下单、处理售后。AI 可以全程代理，你只需要说出需求，剩下的交给它。</p>
+      </div>
+    </div>
+
+    <div class="cat">
+      <div class="cat-head">
+        <span class="num">类别 A · AI 原生硬件</span>
+        <h4>AI 定义硬件，而非硬件加 AI</h4>
+        <p>传统硬件是功能驱动，硬件本身就是目的。AI 原生硬件是智能驱动，硬件只是 AI 的传感器和执行器，核心价值在里面的 AI 大脑和 Agent 服务。</p>
+        <div class="vs"><span>买一个家电</span><em>→</em><span>雇一个数字家人</span></div>
+      </div>
+      <div class="items">
+        <div class="item"><b>AI 眼镜：第一视角的随身入口<span class="stage e">早期</span></b><p>你看到的一切，AI 都能实时理解、叠加信息、帮你执行。场景包括 AR 导航、出国实时翻译菜单和路牌、超市识别配料比价、自动生成会议纪要。商业模式是硬件薄利 + AI 服务订阅。下一步是成为“场景代理人”：站在餐厅门口自动看评价、取号。</p><p class="eg">阿里千问 N1 系列 AI 眼镜售价 2899–3399 元，支持换电，Pro 版加入眼动交互和虹膜支付。据 IDC，2025 年中国智能眼镜出货 246 万台，同比增长 87%。</p></div>
+        <div class="item"><b>消费级具身机器人：家庭里的通用执行终端<span class="stage e">早期</span></b><p>以前的扫地机器人、早教机器人只能执行固定程序。具身机器人有通用 AI 大脑，能听懂自然语言、学习新技能。初期做陪伴、教育、取物、安防，未来逐步接管家务。商业模式是硬件销售 + 技能订阅。</p><p class="eg">消费级人形机器人进入万元时代：松延动力小布米 9998 元，2025 年 10 月京东上架 2 天首批 500 台售罄，之后拿到千台级订单；2026 年 6 月宇树 R1 Air 降至 2.99 万元。</p></div>
+        <div class="item"><b>个性化制造终端：把工厂搬进门店<span class="stage v">已验证</span></b><p>生产端直接触达消费者，现场定制专属产品，消灭标准化库存。产品本身变成服务的载体。</p><p class="eg">欧莱雅推出 Cell BioPrint 等 AI 皮肤检测设备，旗下 ModiFace 虚拟试妆 2023 年使用超过 1 亿次；红豆股份的 AI 新零售体验中心引入 3D 智能量体和 AR 虚拟试衣；拓竹的消费级 3D 打印机配合模型社区，让普通人在家就能打印专属物件。</p></div>
+      </div>
+    </div>
+
+    <div class="cat">
+      <div class="cat-head">
+        <span class="num">类别 B · 生成式内容消费</span>
+        <h4>从看别人做的，到生成你的专属</h4>
+        <p>电影、综艺、游戏都是一对多的广播，所有人看一样的内容。AI 生成内容是一对一的，每个人拿到的都不一样。</p>
+        <div class="vs"><span>一对多广播</span><em>→</em><span>一对一专属</span></div>
+      </div>
+      <div class="items">
+        <div class="item"><b>个人专属内容工业<span class="stage v">已验证</span></b><p>AI 写真、数字人视频、数字人直播，下一步是你主演的电影、以你的人生为剧情的游戏、为你写的小说和音乐。按次付费 + 会员订阅。</p><p class="eg">京东数字人直播成本低至真人的 1/10，带货水平超过 80% 的真人主播，累计服务超 4.5 万个品牌。</p></div>
+        <div class="item"><b>AI 原生互动娱乐<span class="stage e">早期</span></b><p>传统开放世界是“伪开放”，剧情分支和 NPC 对话都是提前写好的。AI 原生娱乐里，每个 NPC 都有独立人格和记忆，世界动态生成，没有固定结局。玩家从“玩设计好的游戏”变成“和 AI 共同创造游戏”。</p></div>
+        <div class="item"><b>数字劳动力订阅<span class="stage e">早期</span></b><p>买的不是工具，而是“数字员工”。你只说目标，Agent 全程做完。包月或按任务付费，本质是人力替代。</p><p class="eg">电商 AI 店长自动分析竞品、管理库存、生成素材、调整优惠。有商家借助它把开店周期从 30 天缩短到 7 天，成本从 3–5 万元降到几百元 token 费（个案）。</p></div>
+      </div>
+    </div>
+
+    <div class="cat">
+      <div class="cat-head">
+        <span class="num">类别 C · 代理式服务消费</span>
+        <h4>从“人找服务”到“AI 帮你搞定”</h4>
+        <p>以前你是决策者，要自己搜索、比较、砍价、下单、处理售后。AI 时代你是验收者，只说需求，AI 全程执行。</p>
+        <div class="vs"><span>货架 + 搜索</span><em>→</em><span>一句话 + 代理人</span></div>
+      </div>
+      <div class="items">
+        <div class="item"><b>全流程生活代理<span class="stage e">早期</span></b><p>“下周去三亚玩 3 天，预算 5000，带孩子，喜欢安静。”AI 自动生成行程、订好所有产品；航班取消它自动改签，酒店不满意它自动换。</p><p class="eg">2025 年双 11，淘宝“AI 帮我挑”、抖音商城接入豆包等 AI 导购上线，用户可以从自然语言问答直接跳转下单。完全由 AI 代办的闭环还在早期，但消费入口正从货架转向对话。</p></div>
+        <div class="item"><b>专业服务普惠化<span class="stage e">早期</span></b><p>AI 健身教练用摄像头实时纠正动作，成本可能只有真人私教的零头（个人估算）；AI 皮肤顾问、法律咨询、财务规划，让普通人也能拿到专业级建议。</p></div>
+        <div class="item"><b>本地生活自动代理<span class="stage e">早期</span></b><p>“今晚请两位客户吃饭，人均 300，粤菜，安静有包间，离公司半小时车程。”AI 筛选餐厅、打电话订位、确认停车，还能提前推荐菜品。</p></div>
+      </div>
+    </div>
+
+    <div class="cat">
+      <div class="cat-head">
+        <span class="num">类别 D · 隐藏的新消费</span>
+        <h4>数字身份与算力，最底层的新品类</h4>
+        <p>以前我们消费实物和服务。AI 时代，我们还会为“数字身份”和“计算能力”付费。</p>
+        <div class="vs"><span>话费 / 网费</span><em>→</em><span>算力费</span></div>
+      </div>
+      <div class="items">
+        <div class="item"><b>数字身份消费<span class="stage f">远期观察</span></b><p>你的数字人和 AI 替身会成为第二身份。你会为它买形象、买技能，就像给游戏角色买皮肤，只不过这是数字世界里的通用身份。求职、社交、开会，替身都可以代你出场。</p></div>
+        <div class="item"><b>算力与数据消费<span class="stage f">远期观察</span></b><p>训练私人 Agent、微调专属模型、购买高质量个人数据集都需要算力。就像每个人都交话费和网费一样，“算力费”会成为基础消费。</p></div>
+      </div>
+    </div>
+
+    <h4>落到投资：每一类我会看的指标</h4>
+    <div class="grid g3">
+      <div class="card"><span class="tag">AI 原生硬件</span><ul><li>硬件毛利率和退货率</li><li>30 天后仍在使用的比例、日均使用时长</li><li>服务订阅的转化率和续费率</li></ul></div>
+      <div class="card"><span class="tag">生成式内容</span><ul><li>单次生成成本和售价之差</li><li>付费率和复购率</li><li>用户作品是否被分享、被二次消费</li></ul></div>
+      <div class="card"><span class="tag">代理式服务</span><ul><li>从提出需求到成功下单的闭环率</li><li>客单价和平台抽佣能否成立</li><li>出错率，以及出错后谁来兜底</li></ul></div>
+    </div>
+    <p class="mono">阶段标签：<span class="stage v">已验证</span> 已有规模化收入 · <span class="stage e">早期</span> 产品已出现，商业模式待验证 · <span class="stage f">远期观察</span> 方向判断，尚无成熟产品</p>
+
+    <h4>底层逻辑的变迁：C2AI2B</h4>
+    <div class="eras">
+      <div class="era"><span class="mono">工业时代 · B2C</span><h4>标准化</h4><ol><li>工厂生产标准化产品</li><li>渠道分销</li><li>消费者被动选择</li></ol></div>
+      <div class="era"><span class="mono">互联网时代 · 平台</span><h4>连接</h4><ol><li>平台连接供需</li><li>消费者搜索选品</li><li>按需配送</li></ol></div>
+      <div class="era now"><span class="mono">AI 时代 · C2AI2B</span><h4>代理</h4><ol><li>消费者提出模糊需求</li><li>AI 翻译、调度、定制</li><li>柔性生产 / 即时服务</li></ol></div>
+    </div>
+    <p class="quote">AI 成为消费者和供给之间的超级中介。消费不再是“买东西”，而是“买一个符合我需求的结果”。</p>
+
+    <h4>怎么分辨真需求和伪 AI 消费</h4>
+    <div class="test">
+      <div class="card yes"><span class="tag">真需求</span><h4>量级上的变化</h4><p>AI 带来数量级的成本下降、效率提升或体验升级。例如定制美妆从几千元降到几十元，私教从几百元一节降到几元一个月。</p></div>
+      <div class="card"><span class="tag warm">伪需求</span><h4>为了加 AI 而加 AI</h4><p>核心体验没有本质变化。例如 AI 牙刷、AI 水杯、AI 垃圾桶，传统功能完全够用，AI 只是营销噱头。</p></div>
+    </div>
+  </section>
+
+  <section class="block" id="ai-health">
+    <p class="mono kicker">医疗影像 / 医药</p>
+    <h3>医疗：三个可以落地的投资假设</h3>
+    <div class="body-text">
+      <p>这一部分不讲大趋势，按投资备忘录的方式写三个具体假设。每个假设回答同样几个问题：痛点是什么、为什么是现在、产业链上下游、谁付钱、有什么证据、最大的风险，以及我会看什么指标。</p>
+    </div>
+
+    <div class="memo">
+      <div class="memo-head"><span class="tag">假设 1 · AI 超声</span><h4>让不会做超声的人，也能做出合格的超声</h4></div>
+      <div class="fields">
+        <span class="fl">痛点</span><p>超声结果高度依赖操作者的手法。培养一名合格的超声医生周期很长，基层诊所、急诊和家庭场景往往没人会做。</p>
+        <span class="fl">Why now</span><p>掌上超声已降到几千美元一台（Butterfly iQ3 售价 3,899 美元）；AI 可以实时提示探头怎么摆、自动完成测量。</p>
+        <span class="fl">证据</span><p>Caption Health 2020 年获 FDA 批准：8 名没有超声经验的护士扫描 240 名患者，左室大小图像合格率 98.8%。2023 年它被 GE HealthCare 收购。2026 年，UltraSight 的 AI 心超引导、Butterfly 获授权的 AI 孕周估算工具相继获批。</p>
+        <span class="fl">市场</span><p>全球超声市场 2024 年约 93 亿美元，预计 2030 年约 139 亿美元（MarketsandMarkets）。AI 打开的是增量：让护士、全科医生这些新用户也能做超声。</p>
+        <span class="fl">上下游</span><div class="chain"><span>芯片 / 探头</span><i>→</i><span>掌上设备</span><i>→</i><span class="me">AI 引导与测量</span><i>→</i><span>基层、急诊、体检、家庭</span></div>
+        <span class="fl">谁付钱</span><p>设备采购方（医院、诊所、体检机构），软件按订阅收费。</p>
+        <span class="fl">风险</span><p>设备巨头直接内置 AI；每增加一个适应症都要单独注册。</p>
+        <span class="fl">我会看</span><p>适应症的注册进度、非专科用户的图像合格率、设备装机量和软件续费率。</p>
+      </div>
+      <p class="memo-take">Caption 被 GE 收购说明两件事：设备巨头需要 AI，而独立 AI 公司最现实的退出路径往往是被并购。投之前就要想清楚谁会是买家。</p>
+    </div>
+
+    <div class="memo">
+      <div class="memo-head"><span class="tag">假设 2 · 数字病理</span><h4>先数字化，再智能化</h4></div>
+      <div class="fields">
+        <span class="fl">痛点</span><p>病理是癌症诊断的金标准，病理医生却越来越少。美国 2007–2017 年病理医生减少 17.5%，每人负担的新发癌症病例增加 41.7%（JAMA Network Open, 2019）。</p>
+        <span class="fl">Why now</span><p>病理基础模型出现：Paige 的 Virchow 用约 150 万张切片训练，微软的 Prov-GigaPath 用 17 万多张全切片训练（Nature, 2024）。</p>
+        <span class="fl">证据</span><p>Paige Prostate 2021 年成为首个获 FDA 批准的 AI 病理产品。但 2025 年 Paige 被 Tempus 以约 8,125 万美元收购，买方看重的是近 700 万张切片的数据。</p>
+        <span class="fl">瓶颈</span><p>多数病理科还在用玻璃切片和显微镜，数字化是 AI 的前提，而扫描和存储投入都不小。</p>
+        <span class="fl">上下游</span><div class="chain"><span class="me">切片扫描仪</span><i>→</i><span class="me">存储与图像平台</span><i>→</i><span>AI 算法</span><i>→</i><span>病理科、第三方检验、药企</span></div>
+        <span class="fl">谁付钱</span><p>医院病理科买效率，第三方检验机构买规模效应，药企为临床试验和伴随诊断付费，而且付费意愿最高。</p>
+        <span class="fl">风险</span><p>数字化推进慢；纯算法公司议价能力弱。</p>
+        <span class="fl">我会看</span><p>是否掌握数据入口（扫描仪或平台）、有没有药企客户、积累了多少切片数据。</p>
+      </div>
+      <p class="memo-take">Paige 的结局说明，单卖算法很难撑起一家独立公司。掌握数据入口的“卖铲子”生意，或者直接服务药企，可能是更好的生意。</p>
+    </div>
+
+    <div class="memo">
+      <div class="memo-head"><span class="tag">假设 3 · AI 制药</span><h4>下一个机会在临床，而不在分子</h4></div>
+      <div class="fields">
+        <span class="fl">关键事实</span><p>约 90% 进入临床的候选药物最终失败（Acta Pharmaceutica Sinica B, 2022）。临床阶段约占新药研发成本的六成：每个获批新药的资本化成本约 26 亿美元，其中临床前约 11 亿美元（Tufts, 2016）。</p>
+        <span class="fl">现状</span><p>AI 主要在加速临床前。英矽智能称其候选药从立项到临床前候选平均只要 12–18 个月，行业通常需要 2.5–4 年（公司数据）；它的 rentosertib 二期 a 结果 2025 年发表在 Nature Medicine。但到目前为止，还没有公认由 AI 发现的新药获得 FDA 批准；Recursion 合并 Exscientia 后，2025 年砍掉了多条管线。</p>
+        <span class="fl">推论</span><p>更快地找到分子，不等于更高的成功率。更大的价值在临床：数字孪生对照组、患者招募、试验设计。例如 Unlearn.AI 的方法 2022 年获 EMA 资格认定，公司称对照组最多可缩减约 35%。</p>
+        <span class="fl">谁付钱</span><p>药企。临床试验最贵、最慢，节省的每一个月都直接对应真金白银。</p>
+        <span class="fl">风险</span><p>监管接受度要逐个试验争取；药企对新方法天然保守。</p>
+        <span class="fl">我会看</span><p>有没有被监管认可的案例、和药企的付费合作数量、能节省多少时间和受试者。</p>
+      </div>
+    </div>
+
+    <h4>干实验、湿实验与闭环：“卖铲子”的机会</h4>
+    <div class="figure">
+      <svg viewBox="0 0 960 230" role="img" aria-label="AI 制药闭环：干实验提出假设，湿实验验证并产生数据，数据回流训练模型">
+        <style>.lp-b{fill:var(--bg);stroke:var(--line)}.lp-h{fill:var(--accent-soft);stroke:var(--accent)}.lp-w{fill:var(--signal-soft);stroke:var(--signal)}.lp-t{fill:var(--ink);font:700 18px var(--f-body)}.lp-s{fill:var(--muted);font:13px var(--f-body)}.lp-a{fill:none;stroke:var(--accent);stroke-width:2}.lp-r{fill:none;stroke:var(--signal);stroke-width:2;stroke-dasharray:6 5}.lp-l{fill:var(--muted);font:12px var(--f-mono)}</style>
+        <defs><marker id="lpa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--accent)"/></marker><marker id="lpr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--signal)"/></marker></defs>
+        <rect class="lp-h" x="10" y="20" width="270" height="110" rx="12"/><text class="lp-t" x="145" y="62" text-anchor="middle">干实验 · 计算</text><text class="lp-s" x="145" y="88" text-anchor="middle">结构预测、分子生成</text><text class="lp-s" x="145" y="108" text-anchor="middle">虚拟筛选、性质预测</text>
+        <path class="lp-a" d="M284 75 H 340" marker-end="url(#lpa)"/><text class="lp-l" x="312" y="64" text-anchor="middle">假设</text>
+        <rect class="lp-w" x="345" y="20" width="270" height="110" rx="12"/><text class="lp-t" x="480" y="62" text-anchor="middle">湿实验 · 实验室</text><text class="lp-s" x="480" y="88" text-anchor="middle">自动化与机器人</text><text class="lp-s" x="480" y="108" text-anchor="middle">高通量合成与验证</text>
+        <path class="lp-a" d="M619 75 H 675" marker-end="url(#lpa)"/><text class="lp-l" x="647" y="64" text-anchor="middle">结果</text>
+        <rect class="lp-b" x="680" y="20" width="270" height="110" rx="12"/><text class="lp-t" x="815" y="62" text-anchor="middle">专有数据</text><text class="lp-s" x="815" y="88" text-anchor="middle">包括失败实验</text><text class="lp-s" x="815" y="108" text-anchor="middle">公开数据集里没有的部分</text>
+        <path class="lp-r" d="M815 134 V 180 Q 815 196 799 196 H 161 Q 145 196 145 180 V 140" marker-end="url(#lpr)"/>
+        <text class="lp-l" x="480" y="218" text-anchor="middle">回流训练模型：越转越快的飞轮</text>
+      </svg>
+      <figcaption>闭环的本质，是把实验室里的结果翻译成模型能读的数据。谁能低成本、大规模地产生别人拿不到的数据，谁就有护城河。</figcaption>
+    </div>
+    <div class="scroll-x">
+      <table>
+        <thead><tr><th>商业模式</th><th>天花板</th><th>现金流</th><th>主要风险</th><th>例子</th></tr></thead>
+        <tbody>
+          <tr><td>计算平台软件</td><td>中</td><td>稳定</td><td>客户少、天花板低</td><td>卖给药企研发团队的设计软件</td></tr>
+          <tr><td>实验 / 研发服务</td><td>中</td><td>好，按项目收费</td><td>线性增长，像 CRO</td><td>自动化湿实验室服务</td></tr>
+          <tr><td>自研管线</td><td>极高</td><td>长期烧钱</td><td>临床失败的二元风险</td><td>英矽智能</td></tr>
+          <tr><td>合作分成（BD）</td><td>高</td><td>首付款 + 里程碑</td><td>依赖合作方推进</td><td>晶泰科技 × DoveTree</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout"><span class="mono">看 BD 交易的一个习惯</span>晶泰科技与 DoveTree 2025 年签下总额最高约 59.9 亿美元的合作，但首付款是 5,100 万美元，大部分金额取决于后续里程碑。看交易要看首付款和里程碑结构，而不是标题里的总额。</div>
+    <p class="srcs">数据来源：FDA 及公司公告（Caption Health、Paige、UltraSight、Butterfly）；MarketsandMarkets；JAMA Network Open 2019；Nature 2024；Nature Medicine 2024、2025；Acta Pharmaceutica Sinica B 2022；Tufts CSDD（DiMasi 2016）；EMA；MedTech Dive、BiopharmaTrend 等报道。</p>
+  </section>
+
+  <section class="block" id="ai-open">
+    <p class="mono kicker">Open to new things</p>
+    <h3>下一个是什么？我保持开放</h3>
+    <div class="body-text">
+      <p>几年前，很少有人想到一台 3D 打印机能年入几十亿，也很少有人相信 AI 能在几分钟里生成一段带配乐的视频。好机会常常出现在既有分类之外，所以比起守住某个固定赛道，我更想保持一套可迁移的判断方法：<strong>看成本结构有没有发生数量级的变化，看用户行为有没有真的改变，看团队是不是最懂这件事的人。</strong></p>
+      <p>除了上面三个方向，最近最让我着迷的是这两个：</p>
+    </div>
+    <div class="grid g2">
+      <div class="card">
+        <span class="tag warm">最近着迷 · 01</span>
+        <h4>脑机接口：人机交互的下一站</h4>
+        <p>做产品这几年，我见证了交互从触屏走向语音、从语音走向多模态。脑机接口可能是这条路的终点：意图不需要经过手和嘴，直接变成指令。</p>
+        <ul>
+          <li><strong>现在</strong>：从医疗康复起步，帮助瘫痪患者用意念打字、控制机械臂；Neuralink 已开展人体试验，国内也有团队进入临床</li>
+          <li><strong>关键变量</strong>：AI 对神经信号的解码能力，决定了信号到意图的准确率和速度</li>
+          <li><strong>当前阶段</strong>：仍以临床试验为主，离商业化还远，更适合长期跟踪</li>
+          <li><strong>我会盯的信号</strong>：第一款植入式产品获批上市；非侵入式方案的解码准确率；第一个消费级场景出现</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tag warm">最近着迷 · 02</span>
+        <h4>新艺术与新创作形态</h4>
+        <p>当创作的技法成本趋近于零，稀缺的就不再是“会不会画、会不会剪”，而是品味、观点和讲故事的能力。新的艺术形式往往诞生于新工具出现之后，就像摄影之于绘画、短视频之于电影。</p>
+        <ul>
+          <li><strong>新形态</strong>：可交互的叙事、实时生成的音乐、和 AI 共创的游戏世界、为一个人定制的影像</li>
+          <li><strong>新角色</strong>：创作者从“执行者”变成“导演”和“策展人”，人人都能有自己的作品</li>
+          <li><strong>当前阶段</strong>：工具已经成熟，平台和社区还没有定型</li>
+          <li><strong>我会盯的信号</strong>：AI 作品的付费和留存数据；版权授权和收益分成模式的出现；哪个工具最先长出社区</li>
+        </ul>
+      </div>
+    </div>
+    <p class="mono">也在持续关注</p>
+    <div class="open">
+      <span>AI for Science</span><span>端侧模型与 AI 芯片</span><span>AI 出海</span><span>企业级 Agent</span><span>具身智能</span><span>AI + 教育</span><span class="q">还有更多我没想到的</span>
+    </div>
+    <div class="callout"><span class="mono">我的工作方式</span>遇到陌生的赛道，我会先当一个重度用户去用它，再去找最懂的人聊，最后把判断写下来，并随新证据不断修正。</div>
+  </section>
+</article>
+
+<!-- ============ TAB 3 ============ -->
+<article class="panel" id="me" role="tabpanel" aria-labelledby="t-me" hidden>
+  <div class="panel-head read">
+    <p class="mono">Why investment · Why me</p>
+    <h2>为什么我对投资感兴趣</h2>
+    <p>做产品时，我最常面对的问题不是“怎么做”，而是“该不该做、往哪个方向做”。后来我意识到，这本质上就是投资判断，只不过对象从一个功能换成了一家公司。</p>
+  </div>
+
+  <section class="block">
+    <p class="mono kicker">起点</p>
+    <h3>从把一个产品做对，到判断哪些事值得做</h3>
+    <div class="body-text">
+      <p>过去三年，我参与了腾讯元宝、腾讯会议等 AI 大模型 C 端产品从 0 到 1 的落地。每次版本排期，本质上都是在有限资源下押注：哪个场景用户真的需要，哪个能力明年会被模型直接覆盖，哪个指标能说明我们走对了路。</p>
+      <p>同时，我持续一年参与一个百万级用户的 AI 垂类微信公众号的选题和撰写，每周追踪全球前沿科技和创业动态。读了大量创业公司的故事后，我越来越想站在更高的视角，去判断哪些团队和方向能真正改变行业。</p>
+      <p>VC 让这两件事合在了一起：用一线产品的手感，去做跨公司、跨赛道的价值判断。</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="mono kicker">投资的本质 × 我的本质</p>
+    <h3>为什么是我：两个本质的重合</h3>
+    <div class="essence">
+      <div class="figure">
+        <svg viewBox="0 0 520 320" role="img" aria-label="维恩图：投资的本质与我的本质，重合部分是从不确定中判断、理解人、把判断说清楚">
+          <style>.vn-a{fill:var(--accent);fill-opacity:.12;stroke:var(--accent);stroke-width:1.5}.vn-b{fill:var(--signal);fill-opacity:.12;stroke:var(--signal);stroke-width:1.5}.vn-t{fill:var(--ink);font:700 19px var(--f-display)}.vn-s{fill:var(--muted);font:12.5px var(--f-body)}.vn-o{fill:var(--ink);font:700 13.5px var(--f-body)}</style>
+          <circle class="vn-a" cx="185" cy="160" r="135"/>
+          <circle class="vn-b" cx="335" cy="160" r="135"/>
+          <text class="vn-t" x="110" y="120" text-anchor="middle">投资</text>
+          <text class="vn-s" x="110" y="150" text-anchor="middle">对未来下注</text>
+          <text class="vn-s" x="110" y="172" text-anchor="middle">判断人</text>
+          <text class="vn-s" x="110" y="194" text-anchor="middle">长期陪伴</text>
+          <text class="vn-t" x="410" y="120" text-anchor="middle">我</text>
+          <text class="vn-s" x="410" y="150" text-anchor="middle">好奇心</text>
+          <text class="vn-s" x="410" y="172" text-anchor="middle">用户视角</text>
+          <text class="vn-s" x="410" y="194" text-anchor="middle">沟通</text>
+          <text class="vn-o" x="260" y="128" text-anchor="middle">从不确定</text>
+          <text class="vn-o" x="260" y="148" text-anchor="middle">中判断</text>
+          <text class="vn-o" x="260" y="180" text-anchor="middle">理解人</text>
+          <text class="vn-o" x="260" y="212" text-anchor="middle">把判断</text>
+          <text class="vn-o" x="260" y="232" text-anchor="middle">说清楚</text>
+        </svg>
+      </div>
+      <div class="grid">
+        <div class="card"><span class="tag">投资的本质</span><p>在信息不完整时，比别人更早、更准地理解一个变化，并为这个判断下注、负责。VC 还要再加一层：判断人，并长期陪伴。</p></div>
+        <div class="card"><span class="tag warm">我的本质</span><p>我是一个翻译者。好奇心让我愿意去理解陌生的东西，用户视角让我能把说不清的需求翻译成产品，沟通让我能把判断翻译成别人能执行的语言。</p></div>
+        <div class="card"><span class="tag">为什么重合</span><p>早期投资和 0 到 1 做产品面对的是同一种处境：几乎没有数据，只能靠理解人和理解变化来做判断，再把判断说清楚。</p></div>
+      </div>
+    </div>
+    <div class="scroll-x">
+      <table>
+        <thead><tr><th>维度</th><th>做产品</th><th>做早期投资</th></tr></thead>
+        <tbody>
+          <tr><td>起点</td><td>从 0 到 1，几乎没有数据</td><td>早期项目，同样几乎没有数据</td></tr>
+          <tr><td>核心对象</td><td>用户</td><td>创始人</td></tr>
+          <tr><td>关键能力</td><td>写 PRD、过评审，把判断说清楚</td><td>写投资备忘录、上投委会，把判断说清楚</td></tr>
+          <tr><td>我想要的变化</td><td>一个产品的深度</td><td>很多公司的广度，从执行判断到做出判断</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h4>我做过的翻译</h4>
+    <div class="tr">
+      <div class="tr-row"><div class="tr-src">“这个 AI 效果好不好？”</div><div class="tr-arrow">→</div><div class="tr-dst">腾讯元宝的评估体系：GSB Good 占比、Badcase 分类、投诉率</div></div>
+      <div class="tr-row"><div class="tr-src">“这条视频好不好看？”</div><div class="tr-arrow">→</div><div class="tr-dst">Shopee 的 Pass/Good 标准：封面呈现、情节衔接、卖点表达</div></div>
+      <div class="tr-row"><div class="tr-src">“企业客户想要更智能的会议室”</div><div class="tr-arrow">→</div><div class="tr-dst">钉钉 Rooms 的智能化路线：15+ 关键功能、与协作工具深度集成</div></div>
+      <div class="tr-row inv"><div class="tr-src">“这个团队行不行？”</div><div class="tr-arrow">→</div><div class="tr-dst">留存曲线、增长质量、创始人与赛道的匹配度、成功时能有多大</div></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="mono kicker">Why me fit</p>
+    <h3>三个特质，都是翻译能力的一部分</h3>
+    <div class="traits">
+      <div class="trait">
+        <span class="tag">好奇心</span>
+        <h4>对新事物保持持续追问</h4>
+        <p class="claim">翻译的前提，是先愿意理解陌生的东西。我习惯把“它为什么会火”追问到底层逻辑。</p>
+        <ul>
+          <li>一年持续为百万级用户 AI 公众号选题、撰写，长期跟踪全球科技与创业动态</li>
+          <li>跨学科背景：HKUST 数据科学与技术（一等荣誉）+ 数学与商业辅修，CMU 信息系统管理硕士</li>
+          <li>新加坡南洋理工、首尔国立、澳洲新南威尔士三段交换，在美国 Walmart 实习</li>
+        </ul>
+        <p class="vc">VC 需要快速进入新赛道、建立认知，好奇心决定了覆盖面和学习速度。</p>
+      </div>
+      <div class="trait">
+        <span class="tag">用户产品视角</span>
+        <h4>看得懂数据背后的用户</h4>
+        <p class="claim">把用户说不清的需求翻译成产品，并用增长来验证。</p>
+        <ul>
+          <li>腾讯元宝：数据驱动能力排序，DAU <span class="kpi">+50%</span>，7 日留存 <span class="kpi">+20%</span></li>
+          <li>腾讯会议：AI 智能纪要周留存 <span class="kpi">+15%</span>；AI 小助手规模化落地，智能化月活 <span class="kpi">+8%</span></li>
+          <li>钉钉 Rooms：15+ 关键功能上线，MAU <span class="kpi">+15%</span>，NPS <span class="kpi">+6</span></li>
+          <li>Shopee：电商图库策略 A/B 实验，Add to Cart Rate <span class="kpi">+2%</span></li>
+        </ul>
+        <p class="vc">产品尽调时，我能拆解留存曲线和增长质量，分辨真实 PMF 和补贴带来的虚假繁荣。</p>
+      </div>
+      <div class="trait">
+        <span class="tag">沟通能力</span>
+        <h4>让不同背景的人朝一个方向走</h4>
+        <p class="claim">把判断翻译成研发、算法、设计和客户都能执行的语言。</p>
+        <ul>
+          <li>在元宝牵头研发、算法、设计多职能团队完成多版本迭代</li>
+          <li>与算法团队一起，把“效果好不好”拆成可量化的评测标准</li>
+          <li>在钉钉与真实企业客户共同打磨核心使用场景</li>
+          <li>中英文工作环境，横跨深圳、杭州、匹兹堡、加州</li>
+        </ul>
+        <p class="vc">和创始人建立信任、在投委会讲清逻辑、投后帮公司对接资源，都依赖沟通。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="mono kicker">经历</p>
+    <h3>一条从技术到产品、再到投资的路径</h3>
+    <div class="figure">
+      <div class="timeline">
+        <div class="tl"><span class="when">2026.05 – 至今</span><span class="dot"></span><div><b>Shopee · AI 策略产品经理</b><p>电商图库策略与短视频质量标准；相关品类 Good Rate +8%，实验组人均观看时长 +6%</p></div></div>
+        <div class="tl"><span class="when">2025.02 – 2026.04</span><span class="dot"></span><div><b>腾讯元宝 · 产品经理培训生</b><p>AI Chatbot 核心输出能力迭代、工作场景差异化增长、模型评估体系与 Badcase 治理</p></div></div>
+        <div class="tl"><span class="when">2024.03 – 2025.01</span><span class="dot"></span><div><b>腾讯会议 · 产品经理培训生</b><p>会中问答、会后记录全链路智能化；AI 小助手规模化落地，智能化月活 +8%</p></div></div>
+        <div class="tl"><span class="when">2023.05 – 2023.08</span><span class="dot"></span><div><b>Walmart Global Tech · 产品经理实习</b><p>智能客服平台，85% 工单自动化解决，满意度保持 95% 以上</p></div></div>
+        <div class="tl edu"><span class="when">2022.08 – 2023.12</span><span class="dot"></span><div><b>卡内基梅隆大学 · 信息系统管理硕士</b><p>商业智能与数据分析方向，GPA 3.8/4；NLP、机器学习、非结构化数据分析</p></div></div>
+        <div class="tl"><span class="when">2021.08 – 2022.06</span><span class="dot"></span><div><b>钉钉 · 云会议产品经理</b><p>钉钉 Rooms 智能化路线规划与生态集成，从零搭建数据分析体系</p></div></div>
+        <div class="tl edu"><span class="when">2017.08 – 2021.06</span><span class="dot"></span><div><b>香港科技大学 · 数据科学与技术学士</b><p>一等荣誉学位，辅修数学与商业，GPA 3.7/4.3</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="closing">
+    <p class="mono" style="color:inherit;opacity:.6">Next</p>
+    <h3>希望把一线 AI 产品的经验，翻译成投资判断。</h3>
+    <p>我希望深度参与前沿科技项目的价值判断与决策，尤其是 AI 应用、AI 原生消费、医疗 AI，以及脑机接口、新创作形态这些正在发生的变化。期待和你聊聊。</p>
+  </div>
+</article>
+</main>
+
+<footer><div class="wrap">产品人的投资思考 · 2026 · 文中案例数据整理自公开报道，行业判断为个人观点</div></footer>
+
+<script>
+(function(){
+  // ---- fund simulator ----
+  var ns='http://www.w3.org/2000/svg',g=document.getElementById('plbars');
+  var demo=[0,0,0,0,0,0,0,.3,.5,.8,1,1,1.5,2,2,3,4,6,12,48];
+  var x0=60,w=22,gap=3.5,base=250,H=210,rects=[],labels=[];
+  for(var i=0;i<20;i++){
+    var r=document.createElementNS(ns,'rect');r.setAttribute('x',x0+i*(w+gap));r.setAttribute('width',w);r.setAttribute('rx',2);g.appendChild(r);rects.push(r);
+    var t=document.createElementNS(ns,'text');t.setAttribute('x',x0+i*(w+gap)+w/2);t.setAttribute('text-anchor','middle');t.setAttribute('class','pl-l');g.appendChild(t);labels.push(t);
+  }
+  function fmt(v){return v>=10?Math.round(v)+'':(Math.round(v*10)/10)+''}
+  function draw(vals){
+    vals=vals.slice().sort(function(a,b){return a-b});
+    var mx=vals[19],steps=[5,10,20,50,100,200],top=steps.filter(function(s){return s>=mx})[0]||mx;
+    document.getElementById('pl-ymax').textContent=top+'x';document.getElementById('pl-ymid').textContent=(top/2)+'x';
+    vals.forEach(function(v,i){
+      var h=Math.max(v/top*H,v===0?1.5:3);
+      rects[i].setAttribute('y',base-h);rects[i].setAttribute('height',h);
+      rects[i].setAttribute('class',i===19?'pl-top':i>=17?'pl-mid':'pl-bar');
+      labels[i].setAttribute('y',base-h-6);labels[i].textContent=(i>=17&&v>0)?fmt(v)+'x':'';
+    });
+    var sum=vals.reduce(function(a,b){return a+b},0),zero=vals.filter(function(v){return v===0}).length;
+    var top1=sum?vals[19]/sum:0,top3=sum?(vals[17]+vals[18]+vals[19])/sum:0;
+    document.getElementById('pl-a1').textContent='1 个项目 ≈ 基金 '+Math.round(top1*100)+'% 的回报';
+    document.getElementById('pl-a2').textContent='前 3 个项目合计贡献约 '+Math.round(top3*100)+'%';
+    document.getElementById('pl-a3').textContent=zero+' 个项目归零，基金整体 '+(sum/20).toFixed(1)+'x';
+    return sum/20;
+  }
+  function deal(){
+    var u=Math.random();
+    if(u<.45)return 0;
+    if(u<.67)return .2+Math.random()*.8;
+    if(u<.85)return 1+Math.random()*2;
+    if(u<.95)return 3*Math.pow(10/3,Math.random());
+    if(u<.99)return 10*Math.pow(3,Math.random());
+    return 30*Math.pow(10/3,Math.random());
+  }
+  function fund(){var a=[];for(var i=0;i<20;i++)a.push(deal());return a}
+  var n=0,win=0,lose=0;
+  function stats(m){
+    document.getElementById('s-mult').textContent=m.toFixed(1)+'x';
+    document.getElementById('s-n').textContent=n+' 支';
+    document.getElementById('s-win').textContent=n?Math.round(win/n*100)+'%':'–';
+    document.getElementById('s-lose').textContent=n?Math.round(lose/n*100)+'%':'–';
+  }
+  function record(m){n++;if(m>=3)win++;if(m<1)lose++}
+  function note(m,vals){
+    var best=Math.max.apply(null,vals),el=document.getElementById('s-note');
+    if(m>=3)el.textContent='跑赢了！最好的项目回报 '+fmt(best)+' 倍，几乎一个人扛起了整支基金。';
+    else if(m>=1)el.textContent='回本了，但离 3 倍还远。没有一个真正的大赢家，基金就很难出色。';
+    else el.textContent='没回本。最好的项目只有 '+fmt(best)+' 倍。这就是为什么 VC 要拼命找到“那一个”。';
+  }
+  document.getElementById('sim-one').addEventListener('click',function(){var v=fund(),m=draw(v);record(m);stats(m);note(m,v)});
+  document.getElementById('sim-many').addEventListener('click',function(){
+    var v,m;for(var k=0;k<100;k++){v=fund();m=v.reduce(function(a,b){return a+b},0)/20;record(m)}
+    m=draw(v);stats(m);
+    document.getElementById('s-note').textContent='模拟了 '+n+' 支基金，只有 '+Math.round(win/n*100)+'% 跑赢 3 倍。图上是最后一支的结果。';
+  });
+  document.getElementById('sim-reset').addEventListener('click',function(){n=win=lose=0;var m=draw(demo);stats(m);document.getElementById('s-note').textContent='先看一支示意基金：7 个项目归零，靠一个 48 倍的项目撑起了整支基金。'});
+  draw(demo);
+
+  // ---- reverse calculator ----
+  var cs=document.getElementById('c-size'),cm=document.getElementById('c-mult'),co=document.getElementById('c-own');
+  function calc(){
+    var s=+cs.value,m=+cm.value,o=+co.value,total=s*m/(o/100);
+    document.getElementById('o-size').textContent=s+' 亿美元';
+    document.getElementById('o-mult').textContent=m.toFixed(1)+' 倍';
+    document.getElementById('o-own').textContent=o+'%';
+    document.getElementById('c-eq').textContent=s+' 亿 × '+m.toFixed(1)+' 倍 ÷ '+o+'% =';
+    document.getElementById('c-total').textContent=Math.round(total).toLocaleString('zh-CN');
+    var k=total/100;document.getElementById('c-n').textContent=k>=10?Math.round(k):(Math.round(k*10)/10);
+  }
+  [cs,cm,co].forEach(function(el){el.addEventListener('input',calc)});calc();
+
+  // ---- entropy demo ----
+  var SC=[
+    {src:'下周带孩子去三亚玩 3 天，安静点',chips:[['ask','出发日期：10 月 21–23 日'],['mem','孩子 5 岁，需要儿童泳池'],['ask','预算上限 5000 元'],['ask','“安静”= 远离主干道、非网红酒店'],['mem','偏好低楼层（上次提过）'],['mem','自驾，需要停车位'],['see','截图里收藏过的两家酒店优先']]},
+    {src:'今晚请两个客户吃饭，别太吵',chips:[['ask','19:00，共 3 人'],['ask','人均 300 元左右'],['mem','客户是广东人，偏好粤菜'],['ask','需要包间'],['see','从公司出发半小时车程内'],['mem','其中一位不吃辣'],['mem','需要开发票']]},
+    {src:'帮我给妈妈挑个生日礼物，别太俗',chips:[['ask','预算 1000 元以内'],['mem','妈妈最近在学瑜伽'],['mem','去年送过丝巾，不要重复'],['see','照片里她常穿浅色系'],['ask','周六前送到'],['ask','“不俗”= 小众设计品牌'],['ask','需要礼盒和贺卡']]}
+  ];
+  var LAB={ask:'追问',mem:'记忆',see:'看见'},cur=0,on=[];
+  var chipsEl=document.getElementById('ent-chips'),entEl=document.getElementById('ent');
+  function entRender(){
+    var sc=SC[cur],k=on.filter(Boolean).length,tot=sc.chips.length,left=Math.round((1-k/tot)*100);
+    document.getElementById('ent-val').textContent=left+'%';
+    document.getElementById('ent-bar').style.width=Math.max(left,0)+'%';
+    entEl.classList.toggle('done',k===tot);
+    document.getElementById('ent-status').textContent=k===tot?'Agent 状态：可以执行了':k>=4?'Agent 状态：能做，但还有风险':'Agent 状态：信息不足，只能猜';
+    var ul=document.getElementById('ent-list');ul.innerHTML='';
+    if(!k){var e=document.createElement('li');e.className='empty';e.textContent='还没有任何约束。Agent 只能按“平均用户”去猜。';ul.appendChild(e)}
+    sc.chips.forEach(function(c,i){if(on[i]){var li=document.createElement('li');li.textContent=c[1];ul.appendChild(li)}});
+    [].forEach.call(chipsEl.children,function(b,i){b.setAttribute('aria-pressed',!!on[i])});
+  }
+  function entLoad(i){
+    cur=i;on=[];var sc=SC[i];document.getElementById('ent-src').textContent=sc.src;chipsEl.innerHTML='';
+    sc.chips.forEach(function(c,j){
+      var b=document.createElement('button');b.type='button';b.className='ent-chip';
+      var tg=document.createElement('i');tg.className='src-'+c[0];tg.textContent=LAB[c[0]];b.appendChild(tg);b.appendChild(document.createTextNode(c[1]));
+      b.addEventListener('click',function(){on[j]=!on[j];entRender()});chipsEl.appendChild(b);
+    });
+    document.querySelectorAll('[data-sc]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.sc==i)});
+    entRender();
+  }
+  document.querySelectorAll('[data-sc]').forEach(function(b){b.addEventListener('click',function(){entLoad(+b.dataset.sc)})});
+  document.getElementById('ent-all').addEventListener('click',function(){on=SC[cur].chips.map(function(){return true});entRender()});
+  document.getElementById('ent-clear').addEventListener('click',function(){on=[];entRender()});
+  entLoad(0);
+
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  function show(id,scroll){
+    var ok=tabs.some(function(t){return t.getAttribute('aria-controls')===id});
+    if(!ok)return;
+    tabs.forEach(function(t){
+      var on=t.getAttribute('aria-controls')===id;
+      t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden=!on;
+    });
+    try{history.replaceState(null,'','#'+id)}catch(e){}
+    if(scroll){var bar=document.querySelector('.tabbar');var y=bar.getBoundingClientRect().top+window.scrollY;if(window.scrollY>y)window.scrollTo({top:y});}
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){show(t.getAttribute('aria-controls'),true)});
+    t.addEventListener('keydown',function(e){
+      var d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(!d)return;
+      var n=tabs[(i+d+tabs.length)%tabs.length];n.focus();n.click();
+    });
+  });
+  document.querySelectorAll('[data-go]').forEach(function(b){
+    b.addEventListener('click',function(){document.getElementById(b.dataset.go).scrollIntoView({behavior:'smooth',block:'start'})});
+  });
+  var h=(location.hash||'').slice(1);
+  if(h)show(h,false);else tabs.forEach(function(t,i){t.tabIndex=i===0?0:-1});
+})();
+</script>
