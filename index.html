@@ -269,6 +269,8 @@ footer{border-top:1px solid var(--line);padding-block:28px;color:var(--muted);fo
 .card .biz,.card .risk{font-size:13.5px;color:var(--ink)}
 .card .biz::before{content:"怎么赚钱 · ";font-family:var(--f-mono);font-size:11px;color:var(--accent)}
 .card .risk::before{content:"关键风险 · ";font-family:var(--f-mono);font-size:11px;color:var(--signal)}
+.idg-more{padding:14px 18px;border:1px dashed var(--accent);border-radius:12px}
+.idg-more > summary{font-size:15px !important}
 .srcs{font-size:12px;color:var(--muted);max-width:var(--read)}
 .memo{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;display:grid;gap:16px}
 .memo-head{display:grid;gap:8px}
@@ -307,8 +309,9 @@ footer{border-top:1px solid var(--line);padding-block:28px;color:var(--muted);fo
 .band-more{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:0 20px 16px 156px;font-size:13.5px;color:var(--muted)}
 .band-more em{display:block;font-style:normal;font-family:var(--f-mono);font-size:11px;color:var(--ink);margin-bottom:2px}
 /* translation history */
-.hist{display:grid;grid-template-columns:repeat(7,minmax(90px,1fr));gap:10px;min-width:700px;align-items:end}
-.h-col{display:grid;gap:6px;align-content:end;position:relative}
+.hist{display:grid;grid-template-columns:repeat(7,minmax(90px,1fr));grid-template-rows:auto auto auto auto;column-gap:10px;min-width:700px;align-items:start}
+.h-col{display:grid;gap:6px;align-content:start;position:relative;grid-row:span 4;grid-template-rows:subgrid}
+.h-col .co{align-self:end}
 .h-col i{display:block;height:140px;position:relative}
 .h-col i::after{content:"";position:absolute;left:0;right:0;bottom:0;height:var(--h);min-height:3px;border-radius:6px 6px 2px 2px;background:var(--line)}
 .h-col.now i::after{background:var(--accent)}
@@ -508,6 +511,109 @@ details.more.wide > p{font-size:14px;color:var(--muted)}
   .panel:not([hidden]){animation:rise .45s ease both}
   @keyframes rise{from{transform:translateY(8px)}to{transform:none}}
 }
+/* drive / tension / focus */
+.drive{display:grid;gap:10px}
+.drive-h{display:grid;grid-template-columns:1fr 1fr;gap:16px;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;color:var(--muted);padding:0 18px}
+.drive-h span:last-child{color:var(--signal)}
+.drive-row{display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.drive-row > div{display:grid;gap:2px;align-content:start}
+.drive-row > div:nth-child(2){border-left:2px solid var(--signal-soft);padding-left:14px}
+.drive-row b{font-size:16px}
+.drive-row p{font-size:14px;color:var(--muted);line-height:1.7}
+.drive-row .ev{grid-column:1 / -1;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--accent)}
+.drive-row .ev::before{content:"证据 · ";font-family:var(--f-mono);font-size:11px}
+.tension{display:grid;gap:14px}
+.tn-row{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:20px;align-items:center;padding:14px 0;border-top:1px solid var(--line)}
+.tn-row:first-child{border-top:0}
+.tn-bar{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center}
+.tn-bar b{font-size:15px}
+.tn-bar i{position:relative;height:2px;background:linear-gradient(90deg,var(--accent),var(--signal))}
+.tn-bar i::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--ink);transform:translate(-50%,-50%);animation:tn 4s ease-in-out infinite}
+@keyframes tn{0%,100%{left:38%}50%{left:62%}}
+@media (prefers-reduced-motion:reduce){.tn-bar i::after{animation:none}}
+.tn-row p{font-size:14.5px;color:var(--muted)}
+.tn-row p strong{color:var(--ink);display:block;font-weight:600}
+.focus{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.focus > div{display:grid;gap:8px;align-content:start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px}
+.focus .tag{justify-self:start}
+.focus p{font-size:14.5px;color:var(--muted)}
+.focus p b{color:var(--ink)}
+.focus .focus-open{grid-column:1 / -1;border-style:dashed;border-color:var(--accent);grid-template-columns:auto 1fr;align-items:center;gap:14px}
+.focus .focus-open p{font-family:var(--f-display);font-size:18px;font-weight:700;color:var(--ink)}
+/* agent map */
+.amap{display:grid;gap:0;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.am-row{display:grid;grid-template-columns:150px minmax(0,1fr) minmax(0,.9fr);gap:18px;padding:16px 20px;border-top:1px solid var(--line);align-items:start}
+.am-row:first-child{border-top:0}
+.am-row h4{font-size:16px}
+.am-row h4 small{display:block;font-family:var(--f-mono);font-size:11px;color:var(--accent);font-weight:400;margin-bottom:2px}
+.am-row p{font-size:14px;color:var(--muted);line-height:1.7}
+.am-row .am-eg{font-size:13px;border-left:2px solid var(--signal-soft);padding-left:12px}
+.am-row .am-eg::before{content:"例子与信号";display:block;font-family:var(--f-mono);font-size:10.5px;color:var(--signal);letter-spacing:.06em}
+/* generative layers */
+.layers{display:grid;gap:8px}
+.ly{display:grid;grid-template-columns:130px minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:center;padding:14px 18px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.ly .ly-n{font-family:var(--f-mono);font-size:12px;color:var(--accent)}
+.ly .ly-n b{display:block;font-family:var(--f-body);font-size:16px;color:var(--ink)}
+.ly p{font-size:14px;color:var(--muted)}
+.ly.hl{background:var(--accent-soft);border-color:var(--accent)}
+.ly.infra{border-style:dashed}
+/* idg map */
+.idgmap{display:grid;gap:0}
+.im-row{display:grid;grid-template-columns:130px minmax(0,1fr);gap:16px;padding:12px 0;border-top:1px solid var(--line)}
+.im-row:first-child{border-top:0}
+.im-row > span{font-family:var(--f-mono);font-size:12px;color:var(--accent);padding-top:3px}
+.im-row ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.im-row li{font-size:14px;color:var(--muted);line-height:1.7}
+.im-row li b{color:var(--ink)}
+@media (max-width:860px){
+  .drive-h{display:none}
+  .drive-row{grid-template-columns:1fr}
+  .drive-row > div:nth-child(2){border-left:0;padding-left:0;border-top:2px solid var(--signal-soft);padding-top:8px;margin-top:6px}
+  .tn-row{grid-template-columns:1fr;gap:10px}
+  .focus{grid-template-columns:1fr}
+  .focus .focus-open{grid-template-columns:1fr}
+  .am-row{grid-template-columns:1fr;gap:6px}
+  .ly{grid-template-columns:1fr;gap:4px}
+  .im-row{grid-template-columns:1fr;gap:6px}
+}
+.pick{gap:10px}
+.pk-h{display:grid;gap:4px}
+.pk-h h4{font-size:18px}
+.pk-r{font-family:var(--f-mono);font-size:11.5px;color:var(--accent);line-height:1.5}
+.pick .pk-what{color:var(--ink)}
+.pick ul.pk-why{list-style:none;padding:0;gap:6px}
+.pick .pk-why li{font-size:14px}
+.pick .pk-why b{color:var(--ink);font-weight:600;margin-right:2px}
+.pick .pk-watch{font-size:13px;padding-top:8px;border-top:1px dashed var(--line)}
+.pick .pk-watch::before{content:"我会盯 · ";font-family:var(--f-mono);font-size:11px;color:var(--signal)}
+.muted-card{background:transparent;border-style:dashed}
+.muted-card .mono{color:var(--accent)}
+.wl-filter{display:flex;flex-wrap:wrap;gap:8px}
+.wl-filter button{font:inherit;font-size:13.5px;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
+.wl-filter button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.wl .card[hidden]{display:none}
+.wl-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:4px}
+.wl-tr{display:grid;grid-template-columns:minmax(0,1fr) 20px minmax(0,1fr);gap:6px;align-items:center;font-size:13px !important}
+.wl-tr span{padding:6px 10px;border-radius:8px;line-height:1.5}
+.wl-tr span:first-child{border:1px dashed var(--line);color:var(--muted)}
+.wl-tr span:last-child{background:var(--accent-soft);color:var(--ink)}
+.wl-tr i{font-style:normal;color:var(--accent);text-align:center;font-family:var(--f-mono)}
+.pick .wl-risk{font-size:13px}
+.pick .wl-risk::before{content:"风险 · ";font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.deal-box{margin-top:14px;border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:16px 18px;background:var(--bg)}
+.deal-title{font-weight:700;font-size:15.5px;color:var(--ink) !important;margin-bottom:12px}
+[id^="xp-"]{scroll-margin-top:90px}
+a.go{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.g3 .eras-mini p{display:block;font-size:13.5px;line-height:1.6}
+.g3 .eras-mini p b{display:block;font-size:12px;font-family:var(--f-mono);color:var(--muted);font-weight:400}
+.g3 .eras-mini p i{margin:0 6px}
+section.block > *,details{min-width:0}
+@media (max-width:560px){
+  .tab small{display:none}
+  .tab{padding:14px 10px 12px;font-size:14.5px}
+  .tabbar .wrap{justify-content:space-between}
+  .sector .subtabs{-webkit-mask-image:linear-gradient(90deg,#000 86%,transparent);mask-image:linear-gradient(90deg,#000 86%,transparent)}
+}
 </style>
 
 <header class="hero">
@@ -553,6 +659,7 @@ details.more.wide > p{font-size:14px;color:var(--muted)}
     <button type="button" role="tab" id="st-inv-terms" aria-controls="inv-terms" aria-selected="false">条款<small>钱怎么分</small></button>
     <button type="button" role="tab" id="st-inv-market" aria-controls="inv-market" aria-selected="false">2026 一级市场<small>募资、投资、退出</small></button>
     <button type="button" role="tab" id="st-inv-idg" aria-controls="inv-idg" aria-selected="false">IDG 案例<small>跟着周期找人</small></button>
+    <button type="button" role="tab" id="st-inv-idgnew" aria-controls="inv-idgnew" aria-selected="false">IDG 新布局<small>按赛道看</small></button>
   </div>
   <div class="sector-main">
   <div class="sub" id="inv-basics" role="tabpanel" aria-labelledby="st-inv-basics">
@@ -642,7 +749,7 @@ details.more.wide > p{font-size:14px;color:var(--muted)}
     </div>
 
     <div class="grid g2">
-      <div class="card calc">
+      <div class="card calc" id="xp-calc">
         <span class="tag">反推计算器</span>
         <div class="seg" role="group" aria-label="计算视角"><button type="button" class="btn sm" data-cm="fund" aria-pressed="true">看基金</button><button type="button" class="btn sm" data-cm="deal" aria-pressed="false">看单个项目</button></div>
         <div id="cm-deal" class="calc-pane" hidden>
@@ -701,7 +808,7 @@ details.more.wide > p{font-size:14px;color:var(--muted)}
     <p class="mono kicker">一笔投资的条款</p>
     <h3>估值决定你买到多少，条款决定最后怎么分钱</h3>
     <div class="body-text"><p>VC 买的通常是<strong>优先股</strong>。公司被卖掉时，优先股可以先拿钱，这就是清算优先权。拖动滑块，看看同样投 2,000 万元、持股 20%，不同条款在不同退出价格下拿回多少。</p></div>
-    <div class="figure">
+    <div class="figure" id="xp-lp">
       <label class="lp-ctl" for="lp-exit">公司退出估值 <output id="lp-out" class="tnum">5,000 万</output></label>
       <input type="range" id="lp-exit" min="0" max="20000" step="500" value="5000">
       <svg id="lpsvg" viewBox="0 0 960 300" role="img" aria-label="清算优先权：不同退出估值下投资人拿回的金额">
@@ -827,7 +934,7 @@ details.more.wide > p{font-size:14px;color:var(--muted)}
           <h4>小鹏：陪一位创始人从智能汽车做到人形机器人</h4>
           <p>2017 年底，IDG 领投小鹏汽车 A+ 轮，之后连续参与 B 轮和 C 轮。小鹏 2020 年在纽交所上市后，IDG 又在 2021 年领投飞行汽车公司小鹏汇天 5 亿美元的 A 轮，2022 年投资机器人公司鹏行。2026 年 8 月，IDG 领投小鹏机器人业务超 9 亿美元的首轮融资，投后估值超 63 亿美元，据报道刷新了中国具身智能单轮融资纪录。</p>
           <p class="lesson">押注一位创始人，就是押注他对下一个技术形态的判断。智能汽车、飞行汽车、人形机器人用的是同一套能力：感知、决策和执行。</p>
-          <details class="more"><summary>拆一笔交易：2026 年小鹏机器人首轮融资</summary>
+          <div class="deal-box" id="xp-deal"><p class="deal-title">拆一笔交易：2026 年小鹏机器人首轮融资</p>
             <div class="deal">
               <div class="deal-facts tnum">
                 <div><span>融资额</span><b>超 9 亿美元</b></div>
@@ -851,7 +958,7 @@ details.more.wide > p{font-size:14px;color:var(--muted)}
               </ul>
               <p class="srcs">交易数据来自 21 世纪经济报道（2026 年 8 月）。持股比例和回报为我按汇率 7.2 估算，非公开数据。</p>
             </div>
-          </details>
+          </div>
         </div>
       </div>
     </div>
@@ -864,14 +971,134 @@ details.more.wide > p{font-size:14px;color:var(--muted)}
       <div class="card"><span class="yr2">2010 · 小米</span><h4>从用户社区倒推产品</h4><p>早期轮次参与并持续跟投，2018 年港交所上市。抓住了平台切换的窗口。</p></div>
     </div>
 
-    <div class="grid g3">
+    <div class="grid g2">
       <div class="card"><span class="tag">可复用的打法 1</span><h4>跟踪人才谱系</h4><p>投出商汤之后，又投了从商汤走出来的 MiniMax。上一个周期的公司，是下一个周期最好的人才来源。</p></div>
       <div class="card"><span class="tag">可复用的打法 2</span><h4>系列化押注同一位创始人</h4><p>从小鹏汽车到小鹏汇天、鹏行和小鹏机器人，IDG 持续投资同一位创始人的多个新业务。</p></div>
-      <div class="card"><span class="tag">可复用的打法 3</span><h4>早进入，多轮跟投</h4><p>小鹏从 A+ 轮跟到 C 轮，商汤从天使轮跟到 B 轮。早期拿到便宜的份额，确认后再加码。</p></div>
     </div>
     <p class="quote">IDG 一次次读懂了别人还读不懂的信号：把一篇论文读成商汤，把一条用户增长曲线读成腾讯。从腾讯到商汤，再到拓竹和小鹏机器人，方法没有变：在一个技术周期的起点，找到最懂这件事的人，然后长期陪他们走完周期。</p>
   </section>
   </div>
+  <div class="sub" id="inv-idgnew" role="tabpanel" aria-labelledby="st-inv-idgnew" hidden>
+  <section class="block">
+    <p class="mono kicker">IDG 近期 AI 布局</p>
+    <h3>最近两年，IDG 在 AI 上押了什么，为什么押得好</h3>
+    <div class="body-text"><p>我按赛道整理了 IDG 近两年参与的七家 AI 公司。大部分是 IDG 在天使轮或 A 轮领投、之后继续加投。“为什么投得好”是我基于公开信息的判断。</p></div>
+
+    <p class="mono era-label">AI 应用 · 生成式 3D</p>
+    <div class="grid g2">
+      <div class="card pick">
+        <div class="pk-h"><h4>Meshy</h4><span class="pk-r">2026.7 · B 轮近 4 亿美元 · IDG 联合领投</span></div>
+        <p class="pk-what">用文字或图片生成可直接使用的 3D 模型，服务游戏开发者和 3D 打印用户。</p>
+        <ul class="pk-why">
+          <li><b>人</b>：创始人胡渊鸣毕业于清华姚班、MIT 博士，开源图形编程语言 Taichi 的作者，在图形学领域积累很深</li>
+          <li><b>数据</b>：注册用户超 1,200 万，严格口径 ARR 一年增长 12 倍，投后估值超 100 亿元</li>
+          <li><b>生意</b>：3D 素材是能直接进生产线的东西，付费比“玩一玩”的生成工具稳定；同时和 IDG 投的拓竹合作，接上消费级 3D 打印</li>
+        </ul>
+        <p class="pk-watch">看生成模型能否直接用于游戏量产，而不只是做原型</p>
+      </div>
+      <div class="card pick">
+        <div class="pk-h"><h4>半图科技 SemiGraph</h4><span class="pk-r">2025.3 · 天使轮数千万元 · IDG 独家投资</span></div>
+        <p class="pk-what">自研 3D 动画大模型，让虚拟人能实时动起来、和人交互，并能接入主流游戏引擎。</p>
+        <ul class="pk-why">
+          <li><b>人</b>：创始人邢骏曾任米哈游逆熵（元宇宙研究中心）AI 负责人，联创做过动漫和虚拟偶像，技术和内容两边都懂</li>
+          <li><b>时点</b>：AI 陪伴和虚拟人交互需求上升，而“会动、能交互”的 3D 角色仍然昂贵</li>
+          <li><b>打法</b>：天使轮独家，早期就拿到干净的份额</li>
+        </ul>
+        <p class="pk-watch">看游戏和陪伴产品是否开始按调用量为动画模型付费</p>
+      </div>
+    </div>
+
+    <p class="mono era-label">AI 消费 · 消费级具身</p>
+    <div class="grid g2">
+      <div class="card pick">
+        <div class="pk-h"><h4>乐享科技</h4><span class="pk-r">天使轮近 2 亿元 · IDG 领投；2025.9 天使++轮继续加投</span></div>
+        <p class="pk-what">做走进家庭的消费级机器人，产品包括履带机器人和约 60 厘米高的小型人形机器人。</p>
+        <ul class="pk-why">
+          <li><b>人</b>：创始人郭人杰是前追觅中国区执行总裁，消费硬件的量产和渠道已经被验证过</li>
+          <li><b>赛道</b>：消费级比工业人形机器人更早有机会规模化，这也是我在新消费里看好的“家庭通用执行终端”</li>
+          <li><b>回报</b>：天使轮估值约 6 亿元，9 个月后投后约 25 亿元，累计融资近 5 亿元。早期领投的账面增值已经很明显</li>
+        </ul>
+        <p class="pk-watch">看意向订单能否转成真实出货，以及 30 天后用户还在不在用</p>
+      </div>
+      <div class="card pick muted-card">
+        <p class="mono">一个连接</p>
+        <p>乐享对应的是我在“新消费”里写的消费级具身机器人；小鹏机器人则是同一条产业链的另一端。IDG 在家庭和人形两个方向都有布局。</p>
+      </div>
+    </div>
+
+    <p class="mono era-label">AI 医疗 · AI 制药</p>
+    <div class="grid g2">
+      <div class="card pick">
+        <div class="pk-h"><h4>Anew Labs 新生实验室</h4><span class="pk-r">2026.9 · 首轮 2.9 亿美元 · IDG 参与</span></div>
+        <p class="pk-what">从字节跳动分拆的端到端 AI 制药平台，已有一款 IL-17 小分子抑制剂处于临床前阶段。</p>
+        <ul class="pk-why">
+          <li><b>人</b>：刘凯带队，约 50 人，AI 算法人才和资深制药专家搭配，团队 2021 年就在字节内部组建</li>
+          <li><b>底子</b>：继承了字节的算力和模型能力（蛋白结构预测模型 Protenix 等），起点高于一般初创公司</li>
+          <li><b>规模</b>：投后估值 15 亿美元，是今年 AI 制药领域最大的一笔融资</li>
+        </ul>
+        <p class="pk-watch">分子设计已经拥挤，我会看它能否把管线推进临床，而不只是更快地找到分子</p>
+      </div>
+      <div class="card pick muted-card">
+        <p class="mono">和我的判断对照</p>
+        <p>我在“医疗与制药”里写过：AI 分子设计速度已被证明，成功率还没有。Anew 的看点不是“更快”，而是大厂级的算力加端到端平台。它能否证明成功率，是整个赛道的风向标。</p>
+      </div>
+    </div>
+
+    <p class="mono era-label">脑机接口</p>
+    <div class="grid g2">
+      <div class="card pick">
+        <div class="pk-h"><h4>智冉医疗</h4><span class="pk-r">2025.8 · A 轮超 3 亿元 · IDG 联合领投；2026.2 A+ 轮继续加投</span></div>
+        <p class="pk-what">侵入式柔性脑机接口：超薄柔性电极，加上自研的解码算法和自动植入机器人。</p>
+        <ul class="pk-why">
+          <li><b>技术</b>：从材料到微纳加工全链条自研，有自己的洁净车间，相关成果发表在《自然·电子学》</li>
+          <li><b>进度</b>：2025 年完成国内首例超百通道侵入式脑机接口临床植入，计划 2026 年启动大规模注册临床</li>
+        </ul>
+        <p class="pk-watch">注册临床的进度和安全性数据</p>
+      </div>
+      <div class="card pick">
+        <div class="pk-h"><h4>强脑科技 BrainCo</h4><span class="pk-r">2026.1 · 约 20 亿元 · IDG 是投资方之一</span></div>
+        <p class="pk-what">非侵入式脑机接口，已有量产的智能假肢和脑电消费硬件。</p>
+        <ul class="pk-why">
+          <li><b>商业化</b>：已有量产产品和收入，这一轮刷新了非侵入式脑机接口单轮融资纪录</li>
+          <li><b>产业方</b>：蓝思科技、领益智造等供应链公司作为战略方入股，量产能力有保障；据报道正在筹备上市</li>
+        </ul>
+        <p class="pk-watch">消费级产品的复购和使用时长</p>
+      </div>
+    </div>
+    <p class="memo-take">侵入式精度高但离商业化远，非侵入式已有收入但精度有限。IDG 两条路线都布局了：一边押远期的技术突破，一边押近期的商业化。</p>
+
+    <p class="mono era-label">AI for Science</p>
+    <div class="grid g2">
+      <div class="card pick">
+        <div class="pk-h"><h4>开物纪</h4><span class="pk-r">2025.11 · 天使轮亿元级 · IDG 联合领投；2026.3 天使+轮继续加投</span></div>
+        <p class="pk-what">用 AI 做新材料研发，把材料大模型、实验验证和吨级量产串成一条链。</p>
+        <ul class="pk-why">
+          <li><b>人</b>：创始人陆子恒博士曾任微软研究院首席研究员</li>
+          <li><b>生意</b>：不只卖模型，而是做到量产、卖材料。模型公司容易被压价，卖材料能拿到实打实的收入</li>
+          <li><b>信号</b>：天使轮就是亿元级，4 个月后又完成数亿元天使+轮</li>
+        </ul>
+        <p class="pk-watch">第一款材料的量产和客户验证</p>
+      </div>
+      <div class="card pick muted-card">
+        <p class="mono">和我的判断对照</p>
+        <p>和 AI 制药一样，AI for Science 的关键是选商业模式。开物纪选的是更重、也更深的路：自己验证、自己量产，用产品收入证明模型的价值。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="mono kicker">我的总结</p>
+    <h3>从这七家公司里，我看到的四个打法</h3>
+    <div class="grid g2">
+      <div class="card"><span class="tag">01 · 押注“最懂这件事的人”</span><p>清华姚班和 MIT、米哈游、追觅、微软研究院、字节跳动：创始人几乎都来自这个领域最好的地方。</p></div>
+      <div class="card"><span class="tag">02 · 早领投，再加码</span><p>乐享、智冉、开物纪都是 IDG 领投早期轮次，下一轮作为老股东继续加投。</p></div>
+      <div class="card"><span class="tag">03 · 同一赛道押两条路线</span><p>脑机接口同时布局侵入式和非侵入式，技术路线还没收敛时，用组合对冲。</p></div>
+      <div class="card"><span class="tag">04 · 组合内协同</span><p>Meshy 和拓竹合作打通 3D 生成和 3D 打印；乐享和小鹏机器人覆盖具身智能的两端。</p></div>
+    </div>
+    <p class="srcs">据投资界、虎嗅、新浪科技、新浪财经、极客公园、央广网、观察者网、经济观察网等公开报道整理（2025–2026）。</p>
+  </section>
+  </div>
+
   </div>
   </div>
 
@@ -888,9 +1115,10 @@ details.more.wide > p{font-size:14px;color:var(--muted)}
   <div class="subtabs" role="tablist" aria-label="赛道" aria-orientation="vertical">
     <button type="button" role="tab" id="st-base" aria-controls="ai-base" aria-selected="true">底层判断<small>价值与翻译</small></button>
     <button type="button" role="tab" id="st-app" aria-controls="ai-app" aria-selected="false">AI 应用<small>为什么仍然重要</small></button>
+    <button type="button" role="tab" id="st-gen" aria-controls="ai-gen" aria-selected="false">生成式<small>从内容到世界</small></button>
     <button type="button" role="tab" id="st-cons" aria-controls="ai-consumer" aria-selected="false">新消费<small>三次成本革命</small></button>
     <button type="button" role="tab" id="st-health" aria-controls="ai-health" aria-selected="false">医疗与制药<small>影像与新药</small></button>
-    <button type="button" role="tab" id="st-open" aria-controls="ai-open" aria-selected="false">下一个是什么<small>保持开放</small></button>
+    <button type="button" role="tab" id="st-watch" aria-controls="ai-watch" aria-selected="false">下一个是什么<small>我在看的公司</small></button>
   </div>
   <div class="sector-main">
   <div class="sub" id="ai-base" role="tabpanel" aria-labelledby="st-base">
@@ -981,7 +1209,7 @@ details.more.wide > p{font-size:14px;color:var(--muted)}
       </div>
       <figcaption>示意图。两条线之间的空白，就是应用公司的机会。</figcaption>
     </div>
-    <div class="grid g2">
+    <div class="grid g3">
       <div class="card"><span class="tag">理由 1 · 来自一线</span><h4>同样的模型能力，产品决定结果</h4><p>在腾讯会议，我们没有只做一个聊天框，而是围绕“会中提问、会后查看记录”的完整链路找 AI 能切入的高频场景，智能纪要的周留存提升了 15%。模型能力是起点，用户留不留下来，取决于产品做得好不好。</p></div>
       <div class="card"><span class="tag">理由 2 · 历史规律</span><h4>每一代平台，最大的价值都在应用</h4>
         <div class="eras-mini">
@@ -991,14 +1219,37 @@ details.more.wide > p{font-size:14px;color:var(--muted)}
         </div>
         <p>基础设施先赚钱，应用后赚大钱。</p></div>
       <div class="card"><span class="tag">理由 3 · 成本曲线</span><h4>成本下降站在应用这边</h4><p>据 a16z 2024 年的测算，同等能力的模型推理成本大约每年下降 10 倍：达到 GPT-3 水平的模型，三年间从每百万 token 60 美元降到 0.06 美元。今天因为太贵做不了的产品，一两年后就能做，已经在做的产品毛利会持续改善。</p></div>
-      <div class="card"><span class="tag">理由 4 · 场景</span><h4>模型公司做不完所有场景</h4><p>通用模型公司要做平台，不可能深入每个行业。医疗、教育、法律、硬件需要行业知识、私有数据、线下交付和用户信任，这些都在模型之外。谁拥有场景，谁就拥有用户关系。</p></div>
     </div>
     <p class="memo-take">但应用要做对。Character.AI 月活一度达 2,000 万，却在 2026 年 10 月申请破产：用户越重度推理成本越高，安全诉讼不断，付费没跟上。有用户不等于有生意，单位经济和安全同样是产品的一部分。</p>
   </section>
 
   <section class="block">
+    <p class="mono kicker">应用层的悖论</p>
+    <h3>模型每几个月就改写一次规则，为什么还押应用</h3>
+    <div class="callout"><span class="mono">我看 AI 应用最常问的一句话</span>当下一代模型强 10 倍时，这家公司是变得更强，还是被替代？好的 AI 应用顺着模型进步的方向走，模型越强，它越受益。</div>
+    <div class="body-text"><p>在一线做 AI 产品，我的体感是应用层大约每四个月就要重来一次：上一版为了补模型短板做的功能，下一版模型可能直接内置。应用公司刚建立起来的优势会被改写，这一点不必回避。我的看法是：改写是双向的，关键是分清哪些优势会蒸发，哪些会累积。</p></div>
+    <div class="grid g3">
+      <div class="card"><span class="tag">为什么仍然是应用 1</span><h4>改写也在创造新窗口</h4><p>每次模型升级会淘汰一批产品，也会解锁一批之前做不了的产品。对创业公司来说，规则变得越快，大公司的存量优势越不值钱。</p></div>
+      <div class="card"><span class="tag">为什么仍然是应用 2</span><h4>变化越快，越需要翻译层</h4><p>用户不会每四个月重新学一遍怎么用 AI。替用户吸收模型的变化，让体验稳定地变好，本身就是应用层的价值。</p></div>
+      <div class="card"><span class="tag">为什么仍然是应用 3</span><h4>模型公司只会内置通用能力</h4><p>被内置的往往是通用功能。医疗、教育、法律、硬件需要行业知识、私有数据、线下交付和用户信任，模型公司没有动力、也没有精力一个个去做。谁拥有场景，谁就拥有用户关系。</p></div>
+    </div>
+    <div class="grid g2">
+      <div class="card"><span class="tag warm">会被下一代模型改写的</span><ul><li>补模型短板的工程：复杂提示词、规则拼接、多步纠错</li><li>单点功能领先：“我们能做到，别人还做不到”</li><li>靠新鲜感获得的用户：模型一升级，免费产品就能做到</li><li>靠模型调用差价赚钱的定价</li></ul></div>
+      <div class="card"><span class="tag">会随模型变强而累积的</span><ul><li>用户关系和上下文：记忆、偏好、个人数据</li><li>嵌进客户流程的工作流和线下交付</li><li>私有数据和用户反馈形成的闭环</li><li>评测体系：知道在这个场景里什么是“好”</li><li>社区、品牌和分发渠道</li></ul></div>
+    </div>
+    <p class="mono">怎么应对：我会看三件事</p>
+    <div class="grid g3">
+      <div class="card"><span class="tag warm">01 · 模型升级是顺风还是逆风</span><p>我会问创始人：下一代模型发布当天，你们做什么？好团队有自己的评测集，几天内就能换上新模型，让体验跃升一截；差的团队要推倒重来。</p></div>
+      <div class="card"><span class="tag warm">02 · 迭代速度本身就是壁垒</span><p>四个月一变，意味着领先不能靠一次做对，只能靠每次都最快适配。我会看换一次底层模型要多久、发版有多频繁。</p></div>
+      <div class="card"><span class="tag warm">03 · 把窗口期的领先换成不会蒸发的资产</span><p>窗口期里赚到的用户，要在下一次改写前变成数据、关系和工作流。我会看留存和数据积累的速度，是否跑赢模型迭代的速度。</p></div>
+    </div>
+    <p class="memo-take">对投资的意味：应用公司的窗口更短，所以要投得更早，看团队适应变化的能力，而不是今天的产品领先多少。</p>
+  </section>
+
+  <section class="block">
     <p class="mono kicker">六种需求</p>
     <h3>每一种基本需求，都会被重新满足一次</h3>
+    <details class="more needs-more"><summary>展开六种需求：效率、信息、情感、创作、成长、娱乐</summary>
     <div class="grid g3 needs">
       <div class="card"><span class="tag">效率 · 做事</span><h4>从工具到数字员工</h4><p class="eg2">Agent、垂类工作流、AI 店长</p><p class="life">一人公司：一个人带着一群 Agent，做完过去一个团队的事</p><p class="biz">按任务、按结果计费</p><p class="risk">模型厂商自己下场做通用 Agent</p></div>
       <div class="card"><span class="tag">信息 · 知道</span><h4>从找链接到直接拿到答案</h4><p class="eg2">豆包、元宝、Perplexity</p><p class="life">记忆外包：眼镜和耳机替你记住一切，随时调取</p><p class="biz">广告、导购佣金、会员</p><p class="risk">入口被大厂把持，获客成本高</p></div>
@@ -1007,17 +1258,63 @@ details.more.wide > p{font-size:14px;color:var(--muted)}
       <div class="card"><span class="tag">学习与健康 · 成长</span><h4>人人都有私人导师和教练</h4><p class="eg2">AI 一对一辅导、AI 健康管理</p><p class="life">每个人都有自己的老师、教练和健康顾问</p><p class="biz">按课程或效果付费，或绑定硬件</p><p class="risk">效果难证明；监管要求高</p></div>
       <div class="card"><span class="tag">娱乐 · 玩</span><h4>从预设剧情到无限生成</h4><p class="eg2">AI 原生游戏、互动叙事</p><p class="life">每个人都在玩只属于自己的游戏和故事</p><p class="biz">买断、内购、订阅</p><p class="risk">推理成本可能吃掉利润；“好玩”很难提前验证</p></div>
     </div>
+    </details>
+  </section>
+
+  <section class="block">
+    <p class="mono kicker">Agent 机会地图</p>
+    <h3>执行变便宜之后，机会在执行之外</h3>
+    <div class="body-text"><p>底层判断里我写过：执行变便宜，理解变值钱。落到 Agent 上，模型会越来越能“做事”，但要让人放心地把事交出去，还缺五样东西。每一样都可能长出独立的公司。</p></div>
+    <div class="amap">
+      <div class="am-row"><h4><small>01</small>交付结果</h4><p>用户买的不是一个会聊天的工具，而是一件办完的事。产品形态和收费方式都会变：按任务、按结果计费。</p><p class="am-eg">盯一个指标：任务完成率，以及用户愿不愿意为“办成了”而不是“用了多久”付钱</p></div>
+      <div class="am-row"><h4><small>02</small>增加可信度</h4><p>Agent 跑了上千步，人没法一步步检查。能让人快速看懂、验收和撤回的产品，决定了用户敢交出多大的任务。</p><p class="am-eg">出错率、出错后谁兜底，是判断一个 Agent 能不能进入真实工作流的门槛</p></div>
+      <div class="am-row"><h4><small>03</small>鉴权</h4><p>Agent 要替你登录、付款、签字，就需要身份和权限：它是谁、代表谁、能做到哪一步。这是 Agent 时代的账户和支付基础设施。</p><p class="am-eg">网站和支付机构开始区分“人”和“代表人的 Agent”，会是这一层起量的信号</p></div>
+      <div class="am-row"><h4><small>04</small>逆向工程</h4><p>大多数软件没有开放接口。Agent 要么学会像人一样点界面，要么自己看懂软件、找出隐藏的接口。后者更快、更便宜，但处在服务条款的灰色地带，软件一改版就可能失效。</p><p class="am-eg">开源工具 Reverse Engineer Anything 2026 年 10 月发布后登上 GitHub 趋势榜第一；Simular 做直接操作电脑和手机的 Agent，2025 年 12 月完成 2,150 万美元 A 轮</p></div>
+      <div class="am-row"><h4><small>05</small>换入口</h4><p>从“人打开 App”变成“Agent 主动来找人”。谁拥有持续的上下文，谁就可能成为新的入口。</p><p class="am-eg">Today AI：前飞书产品 VP 齐俊元创办，主动型个人 AI，接入邮件和日历、主动跟进任务，2026 年 9 月公测，据报道 IDG 参与投资</p></div>
+    </div>
   </section>
 
   <section class="block">
     <p class="mono kicker">落到投资</p>
-    <h3>我会追问的三件事</h3>
-    <div class="grid g3">
+    <h3>我会追问的两件事</h3>
+    <div class="grid g2">
       <div class="card"><span class="tag warm">大厂会不会做？</span><p><strong>大厂的主场</strong>：通用助手、搜索问答、办公提效。</p><p><strong>创业公司的窗口</strong>：小而深的场景、重运营重交付、软硬结合、社区和调性。</p><p class="case-note">在大厂做 AI 产品的体感：资源会优先投向能拉动大盘 DAU 的通用场景，小而深的需求往往排不上优先级。</p></div>
       <div class="card"><span class="tag warm">数据说明了什么？</span><ul class="kpis"><li><b>7 日留存 +20%</b>先看留存，再看下载</li><li><b>场景留存 40%</b>高频刚需才有高留存</li><li><b>投诉 −12%</b>评估能力本身就是壁垒</li><li><b>成本 ∝ 使用量</b>看单用户毛利，不只看时长</li></ul></div>
-      <div class="card"><span class="tag warm">壁垒在哪里？</span><p class="mono">真正的护城河</p><div class="pills ok"><span>数据飞轮</span><span>记忆与关系</span><span>社区与内容</span><span>迭代速度</span></div><p class="mono">容易被高估</p><div class="pills no"><span>Prompt 套壳</span><span>补模型短板</span><span>投放买量</span><span>酷炫演示</span></div></div>
     </div>
-    <div class="callout"><span class="mono">我看 AI 应用会问的一句话</span>当下一代模型强 10 倍时，这家公司是变得更强，还是被替代？好的 AI 应用顺着模型进步的方向走，模型越强，它越受益。</div>
+  </section>
+  </div>
+
+  <div class="sub" id="ai-gen" role="tabpanel" aria-labelledby="st-gen" hidden>
+  <section class="block">
+    <p class="mono kicker">生成式 · 从内容到世界</p>
+    <h3>生成式的下一步：从生成内容，到生成世界</h3>
+    <div class="body-text"><p>图片、视频、音乐的生成已经很成熟。我把生成式方向分成三层加一条基础设施：越往上，离用户越近；越往中间，技术越难。世界模型在第二层，是我最想深挖的位置。</p></div>
+    <div class="layers">
+      <div class="ly"><span class="ly-n">第三层<b>生成体验</b></span><p>只属于一个人的故事、游戏和影视</p><p>Showrunner 2025 年 7 月上线，用户可以生成剧集、把自己写进剧情，同日获 Amazon 投资；AI 原生游戏</p></div>
+      <div class="ly hl"><span class="ly-n">第二层<b>生成世界</b></span><p>可以进入、可以交互、遵守物理规律的世界</p><p>世界模型、实时交互视频：Google DeepMind Genie 3、World Labs、腾讯混元 3D 世界模型</p></div>
+      <div class="ly"><span class="ly-n">第一层<b>生成资产</b></span><p>图片、视频、音乐、3D 模型</p><p>Meshy 2026 年 7 月完成近 4 亿美元 B 轮，注册用户超 1,200 万；VAST（Tripo）2026 年 9 月两轮合计约 30 亿元</p></div>
+      <div class="ly infra"><span class="ly-n">基础设施<b>让它能收钱</b></span><p>版权归因与分成、实时推理降本</p><p>Musical AI 算出生成结果来自哪些训练素材，据此向权利人付费，2026 年 1 月融资 450 万美元</p></div>
+    </div>
+    <div class="callout"><span class="mono">第三层也是新的艺术形态</span>当创作的技法成本趋近于零，稀缺的就不再是“会不会画、会不会剪”，而是品味、观点和讲故事的能力。就像摄影之于绘画、短视频之于电影，新的艺术形式往往诞生在新工具之后：创作者从“执行者”变成“导演”和“策展人”。我会盯 AI 作品的付费和留存、版权分成模式的出现，以及哪个工具最先长出社区。</div>
+  </section>
+
+  <section class="block">
+    <p class="mono kicker">世界模型</p>
+    <h3>同一种技术，两个完全不同的市场</h3>
+    <div class="body-text"><p>世界模型学习的是“世界怎么运转”：物体怎么动、视角变了画面怎么变。据新浪科技 2026 年 6 月的统计，国内已有 33 家世界模型公司，其中 7 家是独角兽。</p></div>
+    <div class="grid g2">
+      <div class="card"><span class="tag">用途 1 · 娱乐</span><h4>生成可以走进去的世界</h4><p>第三层“生成体验”的底座：游戏、虚拟空间、互动影视都可以实时生成，而不是提前做好。</p>
+        <ul><li><strong>World Labs</strong>（李飞飞创办）：首个产品 Marble 2025 年 11 月上线；2026 年 2 月宣布融资 10 亿美元，Autodesk 出资 2 亿美元</li><li><strong>Odyssey</strong>：2026 年 6 月 B 轮 3.1 亿美元，估值 14.5 亿美元，Amazon、GV 参投</li></ul></div>
+      <div class="card"><span class="tag warm">用途 2 · 训练场</span><h4>给机器人和自动驾驶无限练习</h4><p>真实世界采集数据又贵又慢，在生成的世界里可以低成本地无限试错。这连着具身智能，也是 IDG 押注小鹏机器人的同一条产业链。</p>
+        <ul><li><strong>NVIDIA Cosmos</strong>：2025 年 1 月发布，首批用户有 Figure、1X、小鹏、Uber</li><li><strong>极佳视界</strong>：2026 年三个月内融资约 35 亿元，估值超 100 亿元，称已有 30 多家车企客户</li><li><strong>LiberAI</strong>：小众但值得关注，2025 年 12 月成立，用人类示范数据加世界模型训练机器人，半年完成四轮融资，红杉中国、顺为资本等参投（据财联社）</li><li><strong>Decart</strong>：从实时可玩的世界起步，转向自动驾驶和机器人仿真；2026 年 5 月融资 3 亿美元，估值约 40 亿美元</li></ul></div>
+    </div>
+    <p class="mono">我会盯的三个信号</p>
+    <div class="grid g3">
+      <div class="card"><span class="tag">一致性和时长</span><p>生成的世界能保持多久不穿帮。Genie 3 目前能连续交互几分钟，而训练一个智能体需要几个小时。</p></div>
+      <div class="card"><span class="tag">延迟和成本</span><p>实时交互要求每一帧都即时生成。单卡能否跑起来、每小时成本多少，决定它能不能变成消费级产品。</p></div>
+      <div class="card"><span class="tag">谁在付钱</span><p>机器人和车企是否持续为仿真数据付费；娱乐端是否出现第一款留得住人的产品。</p></div>
+    </div>
+    <p class="memo-take">娱乐端的付费习惯还没形成，训练场的买家已经出现。我会先看训练场这条线的公司，同时盯娱乐端第一款能留住用户的产品。</p>
   </section>
   </div>
 
@@ -1223,45 +1520,110 @@ details.more.wide > p{font-size:14px;color:var(--muted)}
   </section>
   </div>
 
-  <div class="sub" id="ai-open" role="tabpanel" aria-labelledby="st-open" hidden>
+  <div class="sub" id="ai-watch" role="tabpanel" aria-labelledby="st-watch" hidden>
   <section class="block">
-    <p class="mono kicker">Open to new things</p>
-    <h3>下一个是什么？我保持开放</h3>
-    <div class="body-text">
-      <p>几年前，很少有人想到一台 3D 打印机能年入几十亿，也很少有人相信 AI 能在几分钟里生成一段带配乐的视频。好机会常常出现在既有分类之外。我更看重一套可迁移的判断方法：<strong>看成本结构有没有发生数量级的变化，看用户行为有没有真的改变，看团队是不是最懂这件事的人。</strong></p>
-      <p>除了 AI 应用、新消费和医疗，最近最让我着迷的是这两个：</p>
+    <p class="mono kicker">我在看的公司</p>
+    <h3>它们都在翻译一种以前翻译不了的东西</h3>
+    <div class="body-text"><p>气味、免疫反应、大脑深处的活动、一个人脑子里的世界观：这些过去没法被测量、被计算、被分享。每一次新东西变得“可翻译”，都会诞生一个新市场。下面是我最近在跟踪的七家公司，每家标出了我看好它的角度。</p></div>
+    <div class="wl-filter" role="group" aria-label="按赛道筛选">
+      <button type="button" class="on" data-f="all">全部</button><button type="button" data-f="app">AI 应用</button><button type="button" data-f="cons">新消费</button><button type="button" data-f="health">医疗健康</button><button type="button" data-f="bci">脑机接口</button><button type="button" data-f="create">新创作</button>
     </div>
-    <div class="grid g2">
-      <div class="card">
-        <span class="tag warm">最近着迷 · 01</span>
-        <h4>脑机接口：人机交互的下一站</h4>
-        <p>做产品这几年，我见证了交互从触屏走向语音、从语音走向多模态。脑机接口可能是这条路的终点：意图不需要经过手和嘴，直接变成指令。</p>
-        <ul>
-          <li><strong>现在</strong>：从医疗康复起步，帮助瘫痪患者用意念打字、控制机械臂；Neuralink 已开展人体试验，国内也有团队进入临床</li>
-          <li><strong>关键变量</strong>：AI 对神经信号的解码能力，决定了信号到意图的准确率和速度</li>
-          <li><strong>当前阶段</strong>：仍以临床试验为主，离商业化还远，更适合长期跟踪</li>
-          <li><strong>我会盯的信号</strong>：第一款植入式产品获批上市；非侵入式方案的解码准确率；第一个消费级场景出现</li>
+    <div class="grid g2 wl">
+      <div class="card pick" data-s="app">
+        <div class="pk-h"><span class="wl-tags"><span class="tag">AI 应用 · Agent</span><span class="tag warm">角度：换入口</span></span><h4>Today AI</h4></div>
+        <p class="wl-tr"><span>你还没说出口的意图</span><i>→</i><span>主动替你推进的任务</span></p>
+        <p class="pk-what">主动型个人 AI：有长期记忆，接入邮件和日历，每天早晚推送简报，主动跟进你没做完的事。2026 年 9 月开放公测，订阅分每月 20 美元和 200 美元两档。</p>
+        <ul class="pk-why">
+          <li><b>人</b>：创始人齐俊元创办过 Teambition（2019 年被阿里收购），之后任飞书产品 VP、负责豆包 PC 端，大厂 AI 产品和创业都做过</li>
+          <li><b>方向</b>：正好落在我“翻译历史”里的下一格：从“人说目标”到“机器从行为推断意图”</li>
+          <li><b>信号</b>：2026 年 3 月成立后很快拿到融资，据报道 IDG 参与</li>
         </ul>
+        <p class="wl-risk">和大厂的助手方向重叠；主动提醒容易变成打扰；常驻运行的成本能否被订阅收回</p>
+        <p class="pk-watch">用户每天打开简报的比例，以及免费到付费的转化</p>
       </div>
-      <div class="card">
-        <span class="tag warm">最近着迷 · 02</span>
-        <h4>新艺术与新创作形态</h4>
-        <p>当创作的技法成本趋近于零，稀缺的就不再是“会不会画、会不会剪”，而是品味、观点和讲故事的能力。新的艺术形式往往诞生于新工具出现之后，就像摄影之于绘画、短视频之于电影。</p>
-        <ul>
-          <li><strong>新形态</strong>：可交互的叙事、实时生成的音乐、和 AI 共创的游戏世界、为一个人定制的影像</li>
-          <li><strong>新角色</strong>：创作者从“执行者”变成“导演”和“策展人”，人人都能有自己的作品</li>
-          <li><strong>当前阶段</strong>：工具已经成熟，平台和社区还没有定型</li>
-          <li><strong>我会盯的信号</strong>：AI 作品的付费和留存数据；版权授权和收益分成模式的出现；哪个工具最先长出社区</li>
+      <div class="card pick" data-s="cons">
+        <div class="pk-h"><span class="wl-tags"><span class="tag">新消费 · 香味</span><span class="tag warm">角度：新模态</span></span><h4>Patina</h4></div>
+        <p class="wl-tr"><span>气味</span><i>→</i><span>可以计算、可以设计的分子</span></p>
+        <p class="pk-what">自研模型 Sense1 模拟人鼻的嗅觉受体，用来设计新的香味分子，想做“香味界的 Pantone”。2026 年 5 月完成 200 万美元种子轮，Betaworks、True Ventures 参投。</p>
+        <ul class="pk-why">
+          <li><b>空白</b>：视觉和听觉早已数字化，嗅觉是少数还没法被精确描述和计算的感官</li>
+          <li><b>人</b>：CEO Sean Raspet 是艺术家和调香师，CTO Laura Sisson 负责技术，团队懂香也懂算法</li>
+          <li><b>对标</b>：同行是 Givaudan、Symrise 这样的香精巨头，以及同赛道的 Osmo，市场是现成的</li>
         </ul>
+        <p class="wl-risk">还没有披露品牌签约；一个新分子从设计到商用的验证周期长</p>
+        <p class="pk-watch">第一个品牌客户签约，以及新分子的商用速度</p>
+      </div>
+      <div class="card pick" data-s="app">
+        <div class="pk-h"><span class="wl-tags"><span class="tag">AI 应用 · 陪伴</span><span class="tag warm">角度：付费方设计</span></span><h4>Meela</h4></div>
+        <p class="wl-tr"><span>独居老人的日常状态</span><i>→</i><span>护理人员看得到的健康信号</span></p>
+        <p class="pk-what">按约定时间给老人打电话聊天，不需要任何硬件。对话中提到胸痛、腿痛等情况，会实时提醒护理人员。2025 年 9 月种子轮 350 万美元，Bain Capital Ventures 领投。</p>
+        <ul class="pk-why">
+          <li><b>界面</b>：电话是老人零学习成本的界面。最好的翻译，是让用户什么都不用学</li>
+          <li><b>数据</b>：据投资方披露，平均通话超过 10 分钟，35% 的用户单次通话超过 25 分钟，早期试点 90 天留存超过 50%</li>
+          <li><b>付费方</b>：用的是老人，付钱的是家属（约每月 40 美元）和养老机构，一份服务同时卖陪伴和健康监测</li>
+        </ul>
+        <p class="wl-risk">通话越长推理成本越高；健康提醒的误报和漏报由谁负责</p>
+        <p class="pk-watch">养老机构的续约率，以及提醒被护理人员采纳的比例</p>
+      </div>
+      <div class="card pick" data-s="health">
+        <div class="pk-h"><span class="wl-tags"><span class="tag">医疗健康 · 新药研发</span><span class="tag warm">角度：政策 why now</span></span><h4>Parallel Bio</h4></div>
+        <p class="wl-tr"><span>人体的免疫反应</span><i>→</i><span>在培养皿里可以测量的数据</span></p>
+        <p class="pk-what">用淋巴结类器官，也就是“培养皿里的免疫系统”，结合 AI 和自动化实验，在人体试验前预测药物的免疫反应，替代部分动物实验。2025 年 6 月 A 轮 2,100 万美元，AIX Ventures 领投，Jeff Dean 等跟投。</p>
+        <ul class="pk-why">
+          <li><b>Why now</b>：FDA 和 NIH 正在逐步减少对动物实验的依赖，正是我在“医疗与制药”里写的类器官机会</li>
+          <li><b>验证</b>：已和 8 家药企合作（其中 3 家世界 500 强），平台上在测 50 多种药物</li>
+          <li><b>模式</b>：一边给药企做服务拿现金流，一边用数据推进自己的肿瘤和自免管线</li>
+        </ul>
+        <p class="wl-risk">自研管线有临床失败的二元风险；类器官的标准化和通量</p>
+        <p class="pk-watch">类器官预测和真实临床结果的吻合度，以及药企合作是否转为长期付费</p>
+      </div>
+      <div class="card pick" data-s="bci">
+        <div class="pk-h"><span class="wl-tags"><span class="tag">脑机接口 · 超声</span><span class="tag warm">角度：技术路线</span></span><h4>格式塔科技 + 华超神控</h4></div>
+        <p class="wl-tr"><span>大脑深处的活动</span><i>→</i><span>不用开颅就能读写的信号</span></p>
+        <p class="pk-what">两家都用超声做非侵入式脑机接口。<b>格式塔科技</b>由彭雷和陈天桥 2026 年初联合创立，主打“全脑读写”，半年累计融资 5.7 亿元。<b>华超神控</b>由前 GE 全球研发中心中国区负责人李昕创立，用经颅聚焦超声“写脑”，2026 年 9 月 Pre-A 轮 2 亿元，红杉中国、云启资本联合领投。</p>
+        <ul class="pk-why">
+          <li><b>第三条路线</b>：侵入式精度高但要开颅，脑电无创但主要读到大脑表层。超声可能同时做到“深”和“无创”</li>
+          <li><b>付费路径</b>：先从慢性疼痛、抑郁、帕金森等治疗切入，“写脑”比“读脑”更早有临床价值</li>
+          <li><b>和 IDG 对照</b>：IDG 投了侵入式的智冉和非侵入脑电的强脑，超声是我在看的第三种可能</li>
+        </ul>
+        <p class="wl-risk">都还没进入正式临床；超声调控的长期安全性需要验证</p>
+        <p class="pk-watch">华超神控闭环系统计划 2027 年一季度进入临床，看首批临床数据</p>
+      </div>
+      <div class="card pick" data-s="create">
+        <div class="pk-h"><span class="wl-tags"><span class="tag">新创作 · 社区</span><span class="tag warm">角度：共创社区</span></span><h4>捏Ta</h4></div>
+        <p class="wl-tr"><span>一个人脑子里的世界观</span><i>→</i><span>别人能进入、能共创的世界</span></p>
+        <p class="pk-what">AI 原生的角色创作社区：用一句话“捏”出角色和世界观，再生成图片、漫画、短片和互动玩法。2026 年 3 月 Pre-A+ 轮超千万美元，九坤创投领投。</p>
+        <ul class="pk-why">
+          <li><b>数据</b>：公司称累计用户超 1,200 万，日均互动时长超 110 分钟，用户已创建 584 万个角色</li>
+          <li><b>供给</b>：内容由用户自己创作和二创，平台不用为内容付费，供给越多越吸引新用户</li>
+          <li><b>形态</b>：创作者从“执行者”变成“导演”，正是我在“生成式”第三层里写的新创作形态</li>
+        </ul>
+        <p class="wl-risk">时长越长推理成本越高；内容安全和版权；高时长能否转成付费</p>
+        <p class="pk-watch">付费率，以及创作者占活跃用户的比例</p>
+      </div>
+      <div class="card pick" data-s="create">
+        <div class="pk-h"><span class="wl-tags"><span class="tag">新创作 · 影视</span><span class="tag warm">角度：观众变创作者</span></span><h4>Showrunner</h4></div>
+        <p class="wl-tr"><span>观众的想象</span><i>→</i><span>可以生成、可以二创的剧集</span></p>
+        <p class="pk-what">Fable Studio 推出的 AI 影视平台：用户可以生成剧集，或者把自己写进剧情。2025 年 7 月公开上线，同月获得 Amazon 投资。</p>
+        <ul class="pk-why">
+          <li><b>范式</b>：影视从“一对多广播”变成“一对一生成”，对应我在新消费里写的生成式内容消费</li>
+          <li><b>团队</b>：Fable Studio 2018 年成立，一直在做 AI 叙事，上线前封测有 1 万名用户</li>
+          <li><b>想象空间</b>：如果 IP 方愿意授权，观众可以在官方世界里创作，平台和 IP 分成</li>
+        </ul>
+        <p class="wl-risk">IP 授权和版权是最大变量；视频生成成本高，质量还不稳定</p>
+        <p class="pk-watch">第一份正式 IP 授权合作，以及用户生成内容的复看率</p>
       </div>
     </div>
-    <p class="mono">也在持续关注</p>
+    <p class="mono">名单之外，也在持续关注</p>
     <div class="open">
       <span>AI for Science</span><span>端侧模型与 AI 芯片</span><span>AI 出海</span><span>企业级 Agent</span><span>具身智能</span><span>AI + 教育</span><span class="q">还有更多我没想到的</span>
     </div>
     <div class="callout"><span class="mono">我的工作方式</span>遇到陌生的赛道，我会先当一个重度用户去用它，再去找最懂的人聊，最后把判断写下来，并随新证据不断修正。</div>
+    <p class="srcs">据公司公告、投资界、虎嗅、新浪科技、BeautyMatter、Yahoo Finance、BusinessWire、Bain Capital Ventures 等公开信息整理。用户和留存数据为公司或投资方口径。</p>
   </section>
+
   </div>
+
   </div>
   </div>
 </article>
@@ -1276,9 +1638,8 @@ details.more.wide > p{font-size:14px;color:var(--muted)}
   <div class="sector">
   <div class="subtabs" role="tablist" aria-label="本页章节" aria-orientation="vertical">
     <button type="button" role="tab" id="st-me-origin" aria-controls="me-origin" aria-selected="true">起点<small>从产品到投资</small></button>
-    <button type="button" role="tab" id="st-me-fit" aria-controls="me-fit" aria-selected="false">投资 × 翻译<small>为什么是我</small></button>
-    <button type="button" role="tab" id="st-me-traits" aria-controls="me-traits" aria-selected="false">三个特质<small>好奇心、用户、沟通</small></button>
-    <button type="button" role="tab" id="st-me-exp" aria-controls="me-exp" aria-selected="false">经历<small>时间线</small></button>
+    <button type="button" role="tab" id="st-me-drive" aria-controls="me-drive" aria-selected="false">驱动与 Ambition<small>为什么是我</small></button>
+    <button type="button" role="tab" id="st-me-vc" aria-controls="me-vc" aria-selected="false">如果我做 VC<small>方法、方向与经历</small></button>
   </div>
   <div class="sector-main">
   <div class="sub" id="me-origin" role="tabpanel" aria-labelledby="st-me-origin">
@@ -1291,11 +1652,9 @@ details.more.wide > p{font-size:14px;color:var(--muted)}
       <p>VC 让这两件事合在了一起：用一线产品的手感，去做跨公司、跨赛道的价值判断。</p>
     </div>
   </section>
-  </div>
-  <div class="sub" id="me-fit" role="tabpanel" aria-labelledby="st-me-fit" hidden>
   <section class="block">
     <p class="mono kicker">投资 × 翻译</p>
-    <h3>为什么是我：投资本身就是一种翻译</h3>
+    <h3>投资本身就是一种翻译</h3>
     <div class="body-text"><p>VC 每天面对的，都是说不清的东西：还没发生的未来、创始人的愿景、零散的信息。投资人的工作，就是把它们翻译成可以下注的判断：</p></div>
     <div class="tr">
       <div class="tr-row inv"><div class="tr-src">不确定的未来</div><div class="tr-arrow">→</div><div class="tr-dst">今天可以下注的价格，也就是估值</div></div>
@@ -1312,50 +1671,70 @@ details.more.wide > p{font-size:14px;color:var(--muted)}
     </div>
   </section>
   </div>
-  <div class="sub" id="me-traits" role="tabpanel" aria-labelledby="st-me-traits" hidden>
+  <div class="sub" id="me-drive" role="tabpanel" aria-labelledby="st-me-drive" hidden>
   <section class="block">
-    <p class="mono kicker">Why me fit</p>
-    <h3>三个特质，都是翻译能力的一部分</h3>
-    <div class="traits">
-      <div class="trait">
-        <span class="tag">好奇心</span>
-        <h4>对新事物保持持续追问</h4>
-        <p class="claim">翻译的前提，是先愿意理解陌生的东西。我习惯把“它为什么会火”追问到底层逻辑。</p>
-        <ul>
-          <li>一年持续为百万级用户 AI 公众号选题、撰写，长期跟踪全球科技与创业动态</li>
-          <li>跨学科背景：HKUST 数据科学与技术（一等荣誉）+ 数学与商业辅修，CMU 信息系统管理硕士</li>
-          <li>新加坡南洋理工、首尔国立、澳洲新南威尔士三段交换，在美国 Walmart 实习</li>
-        </ul>
-        <p class="vc">VC 需要快速进入新赛道、建立认知，好奇心决定了覆盖面和学习速度。</p>
+    <p class="mono kicker">价值驱动</p>
+    <h3>我喜欢做的事，正好是投资需要的</h3>
+    <div class="drive">
+      <div class="drive-h"><span>我喜欢的</span><span>投资需要的</span></div>
+      <div class="drive-row">
+        <div><b>提问题</b><p>对新东西，我习惯追问到底层逻辑：它为什么会火？为什么是现在？</p></div>
+        <div><b>尽调就是提对的问题</b><p>进入陌生赛道、见创始人、做尽调，本质上都是在提问题。好奇心决定覆盖面和学习速度。</p></div>
+        <p class="ev">一年为百万级 AI 公众号选题和撰写 · 数据科学、数学与商业、信息系统的跨学科背景 · 在 8 座城市学习和工作</p>
       </div>
-      <div class="trait">
-        <span class="tag">用户产品视角</span>
-        <h4>看得懂数据背后的用户</h4>
-        <p class="claim">把用户说不清的需求翻译成产品，并用增长来验证。</p>
-        <ul>
-          <li>腾讯元宝：数据驱动能力排序，DAU <span class="kpi">+50%</span>，7 日留存 <span class="kpi">+20%</span></li>
-          <li>腾讯会议：AI 智能纪要周留存 <span class="kpi">+15%</span>；AI 小助手规模化落地，智能化月活 <span class="kpi">+8%</span></li>
-          <li>钉钉 Rooms：15+ 关键功能上线，MAU <span class="kpi">+15%</span>，NPS <span class="kpi">+6</span></li>
-          <li>Shopee：电商图库策略 A/B 实验，Add to Cart Rate <span class="kpi">+2%</span></li>
-        </ul>
-        <p class="vc">产品尽调时，我能拆解留存曲线和增长质量，分辨真实 PMF 和补贴带来的虚假繁荣。</p>
+      <div class="drive-row">
+        <div><b>从不确定走向确定</b><p>最让我兴奋的，是一个判断从模糊的猜测，一步步被数据验证成确定的结论。</p></div>
+        <div><b>把不确定翻译成判断</b><p>投资就是在信息不全时下注，再用后续的证据检验和修正。</p></div>
+        <p class="ev">元宝：先判断用户最需要哪些能力，再用 DAU 和留存数据验证优先级，DAU +50%、7 日留存 +20%</p>
       </div>
-      <div class="trait">
-        <span class="tag">沟通能力</span>
-        <h4>让不同背景的人朝一个方向走</h4>
-        <p class="claim">把判断翻译成研发、算法、设计和客户都能执行的语言。</p>
-        <ul>
-          <li>在元宝牵头研发、算法、设计多职能团队完成多版本迭代</li>
-          <li>与算法团队一起，把“效果好不好”拆成可量化的评测标准</li>
-          <li>在钉钉与真实企业客户共同打磨核心使用场景</li>
-          <li>中英文工作环境，横跨深圳、杭州、匹兹堡、加州</li>
-        </ul>
-        <p class="vc">和创始人建立信任、在投委会讲清逻辑、投后帮公司对接资源，都依赖沟通。</p>
+      <div class="drive-row">
+        <div><b>以人为核心</b><p>做产品时，我最在意的是用户和团队里的人：他们要什么，怎么让大家朝一个方向走。</p></div>
+        <div><b>早期投资就是押注人</b><p>和创始人建立信任、在投委会讲清逻辑、投后帮公司对接资源，都是和人打交道。</p></div>
+        <p class="ev">在元宝牵头研发、算法、设计多职能团队 · 在钉钉和企业客户共同打磨场景，MAU +15%、NPS +6</p>
       </div>
     </div>
   </section>
+  <section class="block">
+    <p class="mono kicker">Ambition</p>
+    <h3>我想要回报，也享受投资里的冲突</h3>
+    <div class="body-text"><p>我对回报有很强的渴望：喜欢成功，喜欢解决问题，更喜欢自己的判断被验证是对的。回报是检验判断最诚实的记分牌。做投资需要同时握住几组相反的特质，而我恰好享受这种张力：</p></div>
+    <div class="tension">
+      <div class="tn-row">
+        <div class="tn-bar"><b>自信</b><i></i><b>谦逊</b></div>
+        <p><strong>敢于下重注，也敢于承认看错。</strong>在腾讯会议，我坚持把 AI 做进会中和会后的完整链路，而不只是加一个聊天框，同时用周留存检验这个判断。</p>
+      </div>
+      <div class="tn-row">
+        <div class="tn-bar"><b>流程感</b><i></i><b>模糊耐受力</b></div>
+        <p><strong>用框架做尽调，也能在信息不全时做决定。</strong>在钉钉从零搭建数据分析体系；在大模型产品里，面对“效果好不好”这种没有标准答案的问题。</p>
+      </div>
+      <div class="tn-row">
+        <div class="tn-bar"><b>长期耐心</b><i></i><b>日常紧迫感</b></div>
+        <p><strong>陪一家公司走十年，也不放过每一周的进展。</strong>一年持续做公众号选题；同时在产品迭代里按周追数据。</p>
+      </div>
+    </div>
+    <p class="quote">我的 ambition 不是每个项目都赚钱。VC 的回报是幂律分布的，我想做的是：不错过那个最大的。</p>
+  </section>
   </div>
-  <div class="sub" id="me-exp" role="tabpanel" aria-labelledby="st-me-exp" hidden>
+  <div class="sub" id="me-vc" role="tabpanel" aria-labelledby="st-me-vc" hidden>
+  <section class="block">
+    <p class="mono kicker">如果我做 VC</p>
+    <h3>我会先做好四件事</h3>
+    <div class="grid g2">
+      <div class="card"><span class="tag">01 · 补短板</span><h4>财务、估值和条款</h4><p>用真实项目边看边练。这个网站里的<a class="go" href="#invest" data-sub="st-inv-vc" data-to="xp-calc">反推计算器</a>、<a class="go" href="#invest" data-sub="st-inv-terms" data-to="xp-lp">清算优先权</a>和<a class="go" href="#invest" data-sub="st-inv-idg" data-to="xp-deal">小鹏机器人交易拆解</a>，就是我的练习记录。</p></div>
+      <div class="card"><span class="tag">02 · 项目来源</span><h4>大厂 AI 产品人</h4><p>下一波 AI 应用的创始人，很多会来自大厂的 AI 产品和算法团队，而这正是我每天所在的圈子。</p></div>
+      <div class="card"><span class="tag">03 · 方法论</span><h4>判断、依据、验证信号</h4><p>每个赛道写下判断和会盯的信号，再随新证据修正。“我的赛道思考”就是这套方法的样本。</p></div>
+      <div class="card"><span class="tag">04 · 投后</span><h4>把产品经验带给被投公司</h4><p>帮公司拆留存曲线、搭评测体系、找增长杠杆，这些是我做过三年的事。</p></div>
+    </div>
+  </section>
+  <section class="block">
+    <p class="mono kicker">细分方向</p>
+    <h3>我想深耕的方向</h3>
+    <div class="focus">
+      <div><span class="tag">主攻</span><p><b>AI 应用里的 Agent</b>：从卖工具到卖结果，谁替用户承担翻译，谁就拥有入口。</p><p><b>生成式与世界模型</b>：从生成内容到生成世界，既是新的娱乐形态，也是机器人的训练场。</p></div>
+      <div><span class="tag warm">长期跟踪</span><p><b>医疗 AI</b>：影像、病理和让临床前更像人的新药研发。</p><p><b>脑机接口</b>：人机交互的终点，现在还在临床阶段。</p></div>
+      <div class="focus-open"><span class="tag">空位</span><p>最好的机会往往出现在既有分类之外。</p></div>
+    </div>
+  </section>
   <section class="block">
     <p class="mono kicker">经历</p>
     <h3>一条从技术到产品、再到投资的路径</h3>
@@ -1551,7 +1930,7 @@ details.more.wide > p{font-size:14px;color:var(--muted)}
       document.getElementById(t.getAttribute('aria-controls')).hidden=!on;
     });
     try{history.replaceState(null,'','#'+id)}catch(e){}
-    if(scroll){var bar=document.querySelector('.tabbar');var y=bar.getBoundingClientRect().top+window.scrollY;if(window.scrollY>y)window.scrollTo({top:y});}
+    if(scroll){var bar=document.querySelector('.tabbar'),m=document.querySelector('main');var y=m.getBoundingClientRect().top+window.scrollY-bar.offsetHeight;if(window.scrollY>y)window.scrollTo({top:y});}
   }
   tabs.forEach(function(t,i){
     t.addEventListener('click',function(){show(t.getAttribute('aria-controls'),true)});
@@ -1564,10 +1943,29 @@ details.more.wide > p{font-size:14px;color:var(--muted)}
     var bs=[].slice.call(bar.querySelectorAll('[role="tab"]'));
     bs.forEach(function(b){b.addEventListener('click',function(){
       bs.forEach(function(x){var on=x===b;x.setAttribute('aria-selected',on);document.getElementById(x.getAttribute('aria-controls')).hidden=!on});
+      if(bar.scrollWidth>bar.clientWidth)bar.scrollLeft=b.offsetLeft-bar.clientWidth/2+b.offsetWidth/2;
       var box=bar.closest('.sector'),y=box.getBoundingClientRect().top+window.scrollY-80;if(window.scrollY>y)window.scrollTo({top:y});
     })});
   });
   var h=(location.hash||'').slice(1);
   if(h)show(h,false);else tabs.forEach(function(t,i){t.tabIndex=i===0?0:-1});
 })();
+</script>
+<script>
+(function(){
+  var f=document.querySelector('.wl-filter');if(!f)return;
+  var bs=[].slice.call(f.querySelectorAll('button')),cs=[].slice.call(document.querySelectorAll('.wl .card'));
+  bs.forEach(function(b){b.addEventListener('click',function(){
+    var v=b.getAttribute('data-f');
+    bs.forEach(function(x){x.classList.toggle('on',x===b)});
+    cs.forEach(function(c){c.hidden=v!=='all'&&c.getAttribute('data-s')!==v});
+  })});
+})();
+</script>
+<script>
+document.querySelectorAll('a.go').forEach(function(a){a.addEventListener('click',function(e){
+  e.preventDefault();
+  document.getElementById('t-invest').click();document.getElementById(a.getAttribute('data-sub')).click();
+  var el=document.getElementById(a.getAttribute('data-to'));setTimeout(function(){window.scrollTo(0,el.getBoundingClientRect().top+window.scrollY-90)},60);
+})});
 </script>
